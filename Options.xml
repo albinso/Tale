@@ -44,27 +44,27 @@
       </CheckButton>
       <CheckButton name="$parent_ReputationChangeExaltedOnlyCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeCB" x="16" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeCB" x="20" y="-5"/>
         </Anchors>
       </CheckButton>
       <CheckButton name="$parent_ArenaEndingCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeExaltedOnlyCB" x="-16" y="-25"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeExaltedOnlyCB" x="-20" y="-25"/>
         </Anchors>
       </CheckButton>
       <CheckButton name="$parent_ArenaEndingWinsOnlyCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB" x="16" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB" x="20" y="-5"/>
         </Anchors>
       </CheckButton>
       <CheckButton name="$parent_BattlegroundEndingCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingWinsOnlyCB" x="-16" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingWinsOnlyCB" x="-20" y="-5"/>
         </Anchors>
       </CheckButton>
       <CheckButton name="$parent_BattlegroundEndingWinsOnlyCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB" x="16" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB" x="20" y="-5"/>
         </Anchors>
       </CheckButton>
     </Frames>

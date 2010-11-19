@@ -38,8 +38,7 @@ Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
 -----------------------
 --  Default Options  --
 -----------------------
---[[
-Memoria_Options = {
+Memoria.DefaultOptions = {
     achievements = true,
     arenaEnding = false,
     arenaEndingOnlyWins = false,
@@ -50,7 +49,6 @@ Memoria_Options = {
     levelUp = true,
     version = 1,
 }
---]]
 
 
 ----------------------------
@@ -91,6 +89,13 @@ end
 --  Initialize and update Addon  --
 -----------------------------------
 function Memoria:Initialize(frame)
+    Memoria:OptionsInitialize()
+    if (not Memoria_Options) then
+        Memoria_Options = {}
+        for key, val in pairs(Memoria.DefaultOptions) do
+            Memoria_Options[key] = val
+        end
+    end
 end
 
 

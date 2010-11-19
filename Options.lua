@@ -33,12 +33,41 @@ local Memoria = Memoria;
 --  Option Handler  --
 ----------------------
 function Memoria:OptionsSave()
+    Memoria_Options.achievements = MemoriaOptions_NewAchievementCB:GetChecked()
+    Memoria_Options.levelUp = MemoriaOptions_LevelUpCB:GetChecked()
+    Memoria_Options.reputationChange = MemoriaOptions_ReputationChangeCB:GetChecked()
+    Memoria_Options.reputationChangeOnlyExalted = MemoriaOptions_ReputationChangeExaltedOnlyCB:GetChecked()
+    Memoria_Options.arenaEnding = MemoriaOptions_ArenaEndingCB:GetChecked()
+    Memoria_Options.arenaEndingOnlyWins = MemoriaOptions_ArenaEndingWinsOnlyCB:GetChecked()
+    Memoria_Options.battlegroundEnding = MemoriaOptions_BattlegroundEndingCB:GetChecked()
+    Memoria_Options.battlegroundEndingOnlyWins = MemoriaOptions_BattlegroundEndingWinsOnlyCB:GetChecked()
 end
 
 function Memoria:OptionsRestore()
+    MemoriaOptions_NewAchievementCB:SetChecked(Memoria_Options.achievements)
+    MemoriaOptions_LevelUpCB:SetChecked(Memoria_Options.levelUp)
+    MemoriaOptions_ReputationChangeCB:SetChecked(Memoria_Options.reputationChange)
+    MemoriaOptions_ReputationChangeExaltedOnlyCB:SetChecked(Memoria_Options.reputationChangeOnlyExalted)
+    MemoriaOptions_ArenaEndingCB:SetChecked(Memoria_Options.arenaEnding)
+    MemoriaOptions_ArenaEndingWinsOnlyCB:SetChecked(Memoria_Options.arenaEndingOnlyWins)
+    MemoriaOptions_BattlegroundEndingCB:SetChecked(Memoria_Options.battlegroundEnding)
+    MemoriaOptions_BattlegroundEndingWinsOnlyCB:SetChecked(Memoria_Options.battlegroundEndingOnlyWins)
 end
 
 function Memoria:OptionsInitialize()
+    -- parse localization
+    MemoriaOptions_Title:SetText(Memoria.ADDONNAME.." v."..Memoria.ADDONVERSION)
+    MemoriaOptions_EventsHeadline:SetText(Memoria.L["Take screenshot on"])
+    MemoriaOptions_NewAchievementCB_Text:SetText(Memoria.L["new achievement"])
+    MemoriaOptions_LevelUpCB_Text:SetText(Memoria.L["level up"])
+    MemoriaOptions_ReputationChangeCB_Text:SetText(Memoria.L["new reputation level"])
+    MemoriaOptions_ReputationChangeExaltedOnlyCB_Text:SetText(Memoria.L["exalted only"])
+    MemoriaOptions_ArenaEndingCB_Text:SetText(Memoria.L["arena endings"])
+    MemoriaOptions_ArenaEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
+    MemoriaOptions_BattlegroundEndingCB_Text:SetText(Memoria.L["battleground endings"])
+    MemoriaOptions_BattlegroundEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
+    -- parse current options
+    Memoria:OptionsRestore()
 end
 
 
