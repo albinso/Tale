@@ -9,4 +9,6 @@
 ## X-Website: http://nanaki.affenfelsen.de
 
 locals/localization.lua
+Options.xml
+Options.lua
 Memoria.lua

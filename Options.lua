@@ -26,5 +26,27 @@
 
 -- Check for addon table
 if (not Memoria) then Memoria = {}; end
-
 local Memoria = Memoria;
+
+
+----------------------
+--  Option Handler  --
+----------------------
+function Memoria:OptionsSave()
+end
+
+function Memoria:OptionsRestore()
+end
+
+function Memoria:OptionsInitialize()
+end
+
+
+----------------------
+--  Register panel  --
+----------------------
+Memoria.OptionPanel = CreateFrame("Frame", "MemoriaOptions", UIParent, "MemoriaOptionsTemplate")
+Memoria.OptionPanel.name = "Memoria"
+Memoria.OptionPanel.okay = function() Memoria:OptionsSave() end
+Memoria.OptionPanel.cancel = function () Memoria:OptionsRestore() end
+InterfaceOptions_AddCategory(Memoria.OptionPanel)

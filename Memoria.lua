@@ -26,51 +26,89 @@
 
 -- Check for addon table
 if (not Memoria) then Memoria = {}; end
-
 local Memoria = Memoria
--- /script Memoria:AddScheduledScreenshot(3)
 
 
---------------------------------------------------------
---  Create Frame for Events and ScreenshotScheduling  --
---------------------------------------------------------
-Memoria.Frame = CreateFrame("Frame")
-Memoria.Frame:SetScript("OnEvent", Memoria:EventHandler(self, event, ...))
-Memoria.Frame:RegisterEvent("ADDON_LOADED")
-Memoria.Frame.queue = {}
+-----------------
+--  Variables  --
+-----------------
+Memoria.ADDONNAME = "Memoria"
+Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
 
---------------------
---  EventHandler  --
---------------------
+-----------------------
+--  Default Options  --
+-----------------------
+--[[
+Memoria_Options = {
+    achievements = true,
+    arenaEnding = false,
+    arenaEndingOnlyWins = false,
+    battlegroundEnding = false,
+    battlegroundEndingOnlyWins = false,
+    reputationChange = true,
+    reputationChangeOnlyExalted = false,
+    levelUp = true,
+    version = 1,
+}
+--]]
+
+
+----------------------------
+--  Declare EventHandler  --
+----------------------------
 function Memoria:EventHandler(frame, event, ...)
-    if (event == ADDON_LOADED) then
+    if (event == "ADDON_LOADED") then
         local addonName = ...
-        if (addonName == "Memoria") then
+        if (addonName == Memoria.ADDONNAME) then
             Memoria:ADDON_LOADED_Handler(frame)
         end
     
-    elseif (event == ACHIEVEMENT_EARNED) then
+    elseif (event == "ACHIEVEMENT_EARNED") then
     
-    elseif (event == CHAT_MSG_COMBAT_FACTION_CHANGE) then
+    elseif (event == "CHAT_MSG_COMBAT_FACTION_CHANGE") then
     
-    elseif (event == PLAYER_LEVEL_UP) then
+    elseif (event == "PLAYER_LEVEL_UP") then
     
     end
-end
-
-function Memoria:ADDON_LOADED_Handler(frame)
-    frame:UnregisterEvent("ADDON_LOADED")
 end
 
 function Memoria:ACHIEVEMENT_EARNED_Handler()
 end
 
-function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler()
+function Memoria:ADDON_LOADED_Handler(frame)
+    Memoria:Initialize(frame)
+    Memoria:RegisterEvents(frame)
+end
+
+function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler()
 end
 
+
+-----------------------------------
+--  Initialize and update Addon  --
+-----------------------------------
+function Memoria:Initialize(frame)
+end
+
+
+-------------------------------------------------
+--  Set registered Event according to options  --
+-------------------------------------------------
+function Memoria:RegisterEvents(frame)
+    frame:UnregisterAllEvents()
+end
+
+
+--------------------------------------------------------
+--  Create Frame for Events and ScreenshotScheduling  --
+--------------------------------------------------------
+Memoria.Frame = CreateFrame("Frame", "MemoriaFrame", UIParent, nil)
+Memoria.Frame:SetScript("OnEvent", function(self, event, ...) Memoria:EventHandler(self, event, ...); end)
+Memoria.Frame:RegisterEvent("ADDON_LOADED")
+Memoria.Frame.queue = {}
 
 
 -----------------------------------------
@@ -98,7 +136,6 @@ function Memoria.Frame:ScreenshotHandler(frame)
     if (#frame.queue == 0) then
         Memoria.Frame:SetScript("OnUpdate", nil)
         frame.running = false
-        MRT_Print("Memoria.Frame OnUpdate-Event diabled")
     end
     frame.lastCheck = now
 end
