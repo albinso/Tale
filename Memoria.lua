@@ -35,6 +35,7 @@ local Memoria = Memoria
 Memoria.ADDONNAME = "Memoria"
 Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
 
+
 -----------------------
 --  Default Options  --
 -----------------------
@@ -70,18 +71,27 @@ function Memoria:EventHandler(frame, event, ...)
     end
 end
 
-function Memoria:ACHIEVEMENT_EARNED_Handler()
-end
-
 function Memoria:ADDON_LOADED_Handler(frame)
     Memoria:Initialize(frame)
     Memoria:RegisterEvents(frame)
 end
 
+function Memoria:ACHIEVEMENT_EARNED_Handler()
+    if (Memoria_Options.achievements) then
+        Memoria:AddScheduledScreenshot(1)
+    end
+end
+
 function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
+    if (Memoria_Options.reputationChange) then
+        Memoria:AddScheduledScreenshot(1)
+    end
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler()
+    if (Memoria_Options.levelUp) then
+        Memoria:AddScheduledScreenshot(1)
+    end
 end
 
 
