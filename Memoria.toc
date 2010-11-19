@@ -8,6 +8,7 @@
 ## SavedVariables: Memoria_Options
 ## X-Website: http://nanaki.affenfelsen.de
 
+embeds.xml
 locals.xml
 Options.xml
 Options.lua
