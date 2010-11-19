@@ -1,0 +1,12 @@
+## Interface: 40000
+## Title: Memoria
+## Version: 0.1 Alpha
+## Notes: Memoria will automatically screenshots various milestones of your characters.
+## Author: Mizukichan@EU-Thrall
+## LoadOnDemand: 0
+## DefaultState: enabled
+## SavedVariables: Memoria_Options
+## X-Website: http://nanaki.affenfelsen.de
+
+locals/localization.lua
+Memoria.lua
