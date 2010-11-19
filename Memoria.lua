@@ -29,11 +29,12 @@ if (not Memoria) then Memoria = {}; end
 local Memoria = Memoria
 
 
------------------
---  Variables  --
------------------
+----------------------------
+--  Variables and Locals  --
+----------------------------
 Memoria.ADDONNAME = "Memoria"
 Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
+local deformat = LibStub("LibDeformat-3.0")
 
 
 -----------------------
@@ -63,10 +64,13 @@ function Memoria:EventHandler(frame, event, ...)
         end
     
     elseif (event == "ACHIEVEMENT_EARNED") then
+        Memoria:ACHIEVEMENT_EARNED_Handler()
     
     elseif (event == "CHAT_MSG_COMBAT_FACTION_CHANGE") then
+        Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
+        Memoria:PLAYER_LEVEL_UP_Handler()
     
     end
 end
@@ -83,8 +87,14 @@ function Memoria:ACHIEVEMENT_EARNED_Handler()
 end
 
 function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
-    if (Memoria_Options.reputationChange) then
+    local chatmsg = ...
+    if (Memoria_Options.reputationChange and not Memoria_Options.reputationChangeOnlyExalted) then
         Memoria:AddScheduledScreenshot(1)
+    elseif (Memoria_Options.reputationChange) then
+        local repLevel, faction = deformat(chatmsg, FACTION_STANDING_CHANGED)
+        if (repLevel == FACTION_STANDING_LABEL8 or repLevel == FACTION_STANDING_LABEL8_FEMALE) then
+            Memoria:AddScheduledScreenshot(1)
+        end
     end
 end
 
