@@ -34,6 +34,7 @@ local Memoria = Memoria
 ----------------------------
 Memoria.ADDONNAME = "Memoria"
 Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
+Memoria.BattlefieldScreenshotAlreadyTaken = false
 Memoria.Debug = true
 local deformat = LibStub("LibDeformat-3.0")
 
@@ -119,19 +120,26 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
     -- if not activated, return
     if (not Memoria_Options.battlegroundEnding and not Memoria_Options.arenaEnding) then return; end
     -- if not ended, return
-    local winner = GetBattlefieldWinner()
-    if (winner == nil) then return; end                                                                         -- possible values: nil (no winner yet), 0 (Horde / green Team), 1 (Alliance / gold Team)
-    -- if we are here, we have a finished arena or battleground
+    local winner = GetBattlefieldWinner()                                                                             -- possible values: nil (no winner yet), 0 (Horde / green Team), 1 (Alliance / gold Team)
+    if (winner == nil) then 
+        Memoria.BattlefieldScreenshotAlreadyTaken = false
+        return
+    end
+    -- if screenshot of this battlefield already taken, then return
+    if (Memoria.BattlefieldScreenshotAlreadyTaken) then return; end
+    -- if we are here, we have a freshly finished arena or battleground
     local isArena = IsActiveBattlefieldArena()
     if (isArena) then
         if (not Memoria_Options.arenaEnding) then return; end
         if (not Memoria_Options.arenaEndingOnlyWins) then
             Memoria:AddScheduledScreenshot(1)
+            Memoria.BattlefieldScreenshotAlreadyTaken = true
             Memoria:DebugMsg("Arena ended - Added screenshot to queue")
         else
             local playerTeam = Memoria:GetPlayerTeam()
             if (winner == playerTeam) then
                 Memoria:AddScheduledScreenshot(1)
+                Memoria.BattlefieldScreenshotAlreadyTaken = true
                 Memoria:DebugMsg("Arena won - Added screenshot to queue")
             end
         end
@@ -139,11 +147,13 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
         if (not Memoria_Options.battlegroundEnding) then return; end
         if (not Memoria_Options.battlegroundEndingOnlyWins) then
             Memoria:AddScheduledScreenshot(1)
+            Memoria.BattlefieldScreenshotAlreadyTaken = true
             Memoria:DebugMsg("Battleground ended - Added screenshot to queue")
         else
             local playerFaction = UnitFactionGroup("player")                                                          -- playerFaction is either "Alliance" or "Horde"
             if ( (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) ) then
                 Memoria:AddScheduledScreenshot(1)
+                Memoria.BattlefieldScreenshotAlreadyTaken = true
                 Memoria:DebugMsg("Battleground won - Added screenshot to queue")
             end
         end
