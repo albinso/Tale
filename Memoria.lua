@@ -35,7 +35,7 @@ local Memoria = Memoria
 Memoria.ADDONNAME = "Memoria"
 Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
 Memoria.BattlefieldScreenshotAlreadyTaken = false
-Memoria.Debug = true
+Memoria.Debug = nil
 local deformat = LibStub("LibDeformat-3.0")
 
 
