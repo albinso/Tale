@@ -2,4 +2,11 @@
  http://wowprogramming.com/FrameXML/UI.xsd">
   <Script file="locals\localization.lua"/>
   <Script file="locals\localization_deDE.lua"/>
+  <Script file="locals\localization_esES.lua"/>
+  <Script file="locals\localization_esMX.lua"/>
+  <Script file="locals\localization_frFR.lua"/>
+  <Script file="locals\localization_koKR.lua"/>
+  <Script file="locals\localization_ruRU.lua"/>
+  <Script file="locals\localization_zhCN.lua"/>
+  <Script file="locals\localization_zhTW.lua"/>
 </Ui>
