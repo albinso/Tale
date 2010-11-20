@@ -69,6 +69,7 @@ function Memoria:EventHandler(frame, event, ...)
         Memoria:ACHIEVEMENT_EARNED_Handler()
     
     elseif (event == "CHAT_MSG_SYSTEM") then
+        Memoria:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
         Memoria:CHAT_MSG_SYSTEM_Handler(...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
@@ -93,7 +94,6 @@ function Memoria:ACHIEVEMENT_EARNED_Handler()
 end
 
 function Memoria:CHAT_MSG_SYSTEM_Handler(...)
-    Memoria:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
     if (not Memoria_Options.reputationChange) then return; end
     local chatmsg = ...
     local repLevel, faction = deformat(chatmsg, FACTION_STANDING_CHANGED)
@@ -183,7 +183,7 @@ end
 function Memoria:RegisterEvents(frame)
     frame:UnregisterAllEvents()
     if (Memoria_Options.achievements) then frame:RegisterEvent("ACHIEVEMENT_EARNED"); end
-    if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE"); end
+    if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
     if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
 end
