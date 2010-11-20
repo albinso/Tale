@@ -34,6 +34,7 @@ local Memoria = Memoria
 ----------------------------
 Memoria.ADDONNAME = "Memoria"
 Memoria.ADDONVERSION = GetAddOnMetadata(Memoria.ADDONNAME, "Version");
+Memoria.Debug = true
 local deformat = LibStub("LibDeformat-3.0")
 
 
@@ -84,29 +85,37 @@ function Memoria:ADDON_LOADED_Handler(frame)
 end
 
 function Memoria:ACHIEVEMENT_EARNED_Handler()
+    Memoria:DebugMsg("ACHIEVEMENT_EARNED_Handler() called...")
     if (not Memoria_Options.achievements) then return; end
     Memoria:AddScheduledScreenshot(1)
+    Memoria:DebugMsg("Achievement - Added screenshot to queue")
 end
 
 function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
+    Memoria:DebugMsg("CHAT_MSG_COMBAT_FACTION_CHANGE_Handler() called...")
     if (not Memoria_Options.reputationChange) then return; end
     if (not Memoria_Options.reputationChangeOnlyExalted) then
         Memoria:AddScheduledScreenshot(1)
+        Memoria:DebugMsg("Reputation changed - Added screenshot to queue")
     else
         local chatmsg = ...
         local repLevel, faction = deformat(chatmsg, FACTION_STANDING_CHANGED)
         if (repLevel == FACTION_STANDING_LABEL8 or repLevel == FACTION_STANDING_LABEL8_FEMALE) then
             Memoria:AddScheduledScreenshot(1)
+            Memoria:DebugMsg("Reputation reached exalted - Added screenshot to queue")
         end
     end
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler()
+    Memoria:DebugMsg("PLAYER_LEVEL_UP_Handler() called...")
     if (not Memoria_Options.levelUp) then return; end
     Memoria:AddScheduledScreenshot(1)
+    Memoria:DebugMsg("Level up - Added screenshot to queue")
 end
 
 function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
+    Memoria:DebugMsg("UPDATE_BATTLEFIELD_STATUS_Handler() called...")
     -- if not activated, return
     if (not Memoria_Options.battlegroundEnding and not Memoria_Options.arenaEnding) then return; end
     -- if not ended, return
@@ -118,20 +127,24 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
         if (not Memoria_Options.arenaEnding) then return; end
         if (not Memoria_Options.arenaEndingOnlyWins) then
             Memoria:AddScheduledScreenshot(1)
+            Memoria:DebugMsg("Arena ended - Added screenshot to queue")
         else
             local playerTeam = Memoria:GetPlayerTeam()
             if (winner == playerTeam) then
                 Memoria:AddScheduledScreenshot(1)
+                Memoria:DebugMsg("Arena won - Added screenshot to queue")
             end
         end
     else
         if (not Memoria_Options.battlegroundEnding) then return; end
         if (not Memoria_Options.battlegroundEndingOnlyWins) then
             Memoria:AddScheduledScreenshot(1)
+            Memoria:DebugMsg("Battleground ended - Added screenshot to queue")
         else
             local playerFaction = UnitFactionGroup("player")                                                          -- playerFaction is either "Alliance" or "Horde"
             if ( (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) ) then
                 Memoria:AddScheduledScreenshot(1)
+                Memoria:DebugMsg("Battleground won - Added screenshot to queue")
             end
         end
     end
@@ -158,26 +171,26 @@ end
 -------------------------------------------------
 function Memoria:RegisterEvents(frame)
     frame:UnregisterAllEvents()
-    if (Memoria_Options.achievements) then frame.RegisterEvent("ACHIEVEMENT_EARNED"); end
-    if (Memoria_Options.reputationChange) then frame.RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE"); end
-    if (Memoria_Options.levelUp) then frame.RegisterEvent("PLAYER_LEVEL_UP"); end
-    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame.RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
+    if (Memoria_Options.achievements) then frame:RegisterEvent("ACHIEVEMENT_EARNED"); end
+    if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE"); end
+    if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
+    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
 end
 
 
 --------------------------------------------------------
 --  Create Frame for Events and ScreenshotScheduling  --
 --------------------------------------------------------
-Memoria.Frame = CreateFrame("Frame", "MemoriaFrame", UIParent, nil)
-Memoria.Frame:SetScript("OnEvent", function(self, event, ...) Memoria:EventHandler(self, event, ...); end)
-Memoria.Frame:RegisterEvent("ADDON_LOADED")
-Memoria.Frame.queue = {}
+MemoriaFrame = CreateFrame("Frame", "MemoriaFrame", UIParent, nil)
+MemoriaFrame:SetScript("OnEvent", function(self, event, ...) Memoria:EventHandler(self, event, ...); end)
+MemoriaFrame:RegisterEvent("ADDON_LOADED")
+MemoriaFrame.queue = {}
 
 
 -----------------------------------------
 --  Functions for screenshot handling  --
 -----------------------------------------
-function Memoria.Frame:ScreenshotHandler(frame)
+function Memoria:ScreenshotHandler(frame)
     if ( (time() - frame.lastCheck) == 0 ) then return; end
     local rmList = {}
     local now = time()
@@ -197,19 +210,19 @@ function Memoria.Frame:ScreenshotHandler(frame)
         tremove(frame.queue, index)
     end
     if (#frame.queue == 0) then
-        Memoria.Frame:SetScript("OnUpdate", nil)
+        frame:SetScript("OnUpdate", nil)
         frame.running = false
     end
     frame.lastCheck = now
 end
 
 function Memoria:AddScheduledScreenshot(delay)
-    tinsert(Memoria.Frame.queue, delay);
-    if (not Memoria.Frame.running) then
-        Memoria.Frame.lastCheck = time()
-        Memoria.Frame.lastScreenshot = time()
-        Memoria.Frame.running = true
-        Memoria.Frame:SetScript("OnUpdate", Memoria.Frame:ScreenshotHandler(self))
+    tinsert(MemoriaFrame.queue, delay);
+    if (not MemoriaFrame.running) then
+        MemoriaFrame.lastCheck = time()
+        MemoriaFrame.lastScreenshot = time()
+        MemoriaFrame.running = true
+        MemoriaFrame:SetScript("OnUpdate", function(self) Memoria:ScreenshotHandler(self); end)
     end
 end
 
@@ -225,5 +238,11 @@ function Memoria:GetPlayerTeam()
         if (playerName == team) then
             return team
         end
+    end
+end
+
+function Memoria:DebugMsg(text)
+    if (Memoria.Debug) then
+        DEFAULT_CHAT_FRAME:AddMessage("Memoria v."..Memoria.ADDONVERSION.." Debug: "..text, 1, 0.5, 0);
     end
 end
