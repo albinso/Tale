@@ -138,17 +138,18 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
 end
 
 
------------------------------------
---  Initialize and update Addon  --
------------------------------------
+----------------------------------------------
+--  Update saved data and initialize addon  --
+----------------------------------------------
 function Memoria:Initialize(frame)
-    Memoria:OptionsInitialize()
     if (not Memoria_Options) then
         Memoria_Options = {}
         for key, val in pairs(Memoria.DefaultOptions) do
             Memoria_Options[key] = val
         end
     end
+    Memoria:OptionsInitialize()
+    Memoria:RegisterEvents(frame)
 end
 
 
@@ -157,6 +158,10 @@ end
 -------------------------------------------------
 function Memoria:RegisterEvents(frame)
     frame:UnregisterAllEvents()
+    if (Memoria_Options.achievements) then frame.RegisterEvent("ACHIEVEMENT_EARNED"); end
+    if (Memoria_Options.reputationChange) then frame.RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE"); end
+    if (Memoria_Options.levelUp) then frame.RegisterEvent("PLAYER_LEVEL_UP"); end
+    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame.RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
 end
 
 

@@ -41,6 +41,7 @@ function Memoria:OptionsSave()
     Memoria_Options.arenaEndingOnlyWins = MemoriaOptions_ArenaEndingWinsOnlyCB:GetChecked()
     Memoria_Options.battlegroundEnding = MemoriaOptions_BattlegroundEndingCB:GetChecked()
     Memoria_Options.battlegroundEndingOnlyWins = MemoriaOptions_BattlegroundEndingWinsOnlyCB:GetChecked()
+    Memoria:RegisterEvents(MemoriaFrame)
 end
 
 function Memoria:OptionsRestore()
