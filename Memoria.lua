@@ -71,6 +71,9 @@ function Memoria:EventHandler(frame, event, ...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
         Memoria:PLAYER_LEVEL_UP_Handler()
+        
+    elseif (event == "UPDATE_BATTLEFIELD_STATUS") then
+        Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
     
     end
 end
@@ -81,16 +84,16 @@ function Memoria:ADDON_LOADED_Handler(frame)
 end
 
 function Memoria:ACHIEVEMENT_EARNED_Handler()
-    if (Memoria_Options.achievements) then
-        Memoria:AddScheduledScreenshot(1)
-    end
+    if (not Memoria_Options.achievements) then return; end
+    Memoria:AddScheduledScreenshot(1)
 end
 
 function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
-    local chatmsg = ...
-    if (Memoria_Options.reputationChange and not Memoria_Options.reputationChangeOnlyExalted) then
+    if (not Memoria_Options.reputationChange) then return; end
+    if (not Memoria_Options.reputationChangeOnlyExalted) then
         Memoria:AddScheduledScreenshot(1)
-    elseif (Memoria_Options.reputationChange) then
+    else
+        local chatmsg = ...
         local repLevel, faction = deformat(chatmsg, FACTION_STANDING_CHANGED)
         if (repLevel == FACTION_STANDING_LABEL8 or repLevel == FACTION_STANDING_LABEL8_FEMALE) then
             Memoria:AddScheduledScreenshot(1)
@@ -99,8 +102,38 @@ function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler()
-    if (Memoria_Options.levelUp) then
-        Memoria:AddScheduledScreenshot(1)
+    if (not Memoria_Options.levelUp) then return; end
+    Memoria:AddScheduledScreenshot(1)
+end
+
+function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
+    -- if not activated, return
+    if (not Memoria_Options.battlegroundEnding and not Memoria_Options.arenaEnding) then return; end
+    -- if not ended, return
+    local winner = GetBattlefieldWinner()
+    if (winner == nil) then return; end                                                                         -- possible values: nil (no winner yet), 0 (Horde / green Team), 1 (Alliance / gold Team)
+    -- if we are here, we have a finished arena or battleground
+    local isArena = IsActiveBattlefieldArena()
+    if (isArena) then
+        if (not Memoria_Options.arenaEnding) then return; end
+        if (not Memoria_Options.arenaEndingOnlyWins) then
+            Memoria:AddScheduledScreenshot(1)
+        else
+            local playerTeam = Memoria:GetPlayerTeam()
+            if (winner == playerTeam) then
+                Memoria:AddScheduledScreenshot(1)
+            end
+        end
+    else
+        if (not Memoria_Options.battlegroundEnding) then return; end
+        if (not Memoria_Options.battlegroundEndingOnlyWins) then
+            Memoria:AddScheduledScreenshot(1)
+        else
+            local playerFaction = UnitFactionGroup("player")                                                          -- playerFaction is either "Alliance" or "Horde"
+            if ( (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) ) then
+                Memoria:AddScheduledScreenshot(1)
+            end
+        end
     end
 end
 
@@ -172,5 +205,20 @@ function Memoria:AddScheduledScreenshot(delay)
         Memoria.Frame.lastScreenshot = time()
         Memoria.Frame.running = true
         Memoria.Frame:SetScript("OnUpdate", Memoria.Frame:ScreenshotHandler(self))
+    end
+end
+
+
+-------------------------
+--  Support functions  --
+-------------------------
+function Memoria:GetPlayerTeam()
+    local numBattlefieldScores = GetNumBattlefieldScores()
+    local playerName = UnitName("player")
+    for i = 1, numBattlefieldScores do
+        local name, _, _, _, _, team = GetBattlefieldScore(i)
+        if (playerName == team) then
+            return team
+        end
     end
 end
