@@ -1,7 +1,7 @@
 ## Interface: 40000
 ## Title: Memoria
 ## Version: 1.0-Beta
-## Notes: Memoria will automatically screenshots various milestones of your characters.
+## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
 ## DefaultState: enabled

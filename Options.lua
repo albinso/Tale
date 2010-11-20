@@ -78,5 +78,5 @@ end
 Memoria.OptionPanel = CreateFrame("Frame", "MemoriaOptions", UIParent, "MemoriaOptionsTemplate")
 Memoria.OptionPanel.name = "Memoria"
 Memoria.OptionPanel.okay = function() Memoria:OptionsSave() end
-Memoria.OptionPanel.cancel = function () Memoria:OptionsRestore() end
+Memoria.OptionPanel.cancel = function() Memoria:OptionsRestore() end
 InterfaceOptions_AddCategory(Memoria.OptionPanel)
