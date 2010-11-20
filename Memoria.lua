@@ -68,8 +68,8 @@ function Memoria:EventHandler(frame, event, ...)
     elseif (event == "ACHIEVEMENT_EARNED") then
         Memoria:ACHIEVEMENT_EARNED_Handler()
     
-    elseif (event == "CHAT_MSG_COMBAT_FACTION_CHANGE") then
-        Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
+    elseif (event == "CHAT_MSG_SYSTEM") then
+        Memoria:CHAT_MSG_SYSTEM_Handler(...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
         Memoria:PLAYER_LEVEL_UP_Handler()
@@ -92,18 +92,19 @@ function Memoria:ACHIEVEMENT_EARNED_Handler()
     Memoria:DebugMsg("Achievement - Added screenshot to queue")
 end
 
-function Memoria:CHAT_MSG_COMBAT_FACTION_CHANGE_Handler(...)
-    Memoria:DebugMsg("CHAT_MSG_COMBAT_FACTION_CHANGE_Handler() called...")
+function Memoria:CHAT_MSG_SYSTEM_Handler(...)
+    Memoria:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
     if (not Memoria_Options.reputationChange) then return; end
+    local chatmsg = ...
+    local repLevel, faction = deformat(chatmsg, FACTION_STANDING_CHANGED)
+    if (not repLevel or not faction) then return; end
     if (not Memoria_Options.reputationChangeOnlyExalted) then
         Memoria:AddScheduledScreenshot(1)
-        Memoria:DebugMsg("Reputation changed - Added screenshot to queue")
+        Memoria:DebugMsg("Reputation level changed - Added screenshot to queue")
     else
-        local chatmsg = ...
-        local repLevel, faction = deformat(chatmsg, FACTION_STANDING_CHANGED)
         if (repLevel == FACTION_STANDING_LABEL8 or repLevel == FACTION_STANDING_LABEL8_FEMALE) then
             Memoria:AddScheduledScreenshot(1)
-            Memoria:DebugMsg("Reputation reached exalted - Added screenshot to queue")
+            Memoria:DebugMsg("Reputation level reached exalted - Added screenshot to queue")
         end
     end
 end
