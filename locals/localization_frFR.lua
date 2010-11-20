@@ -12,4 +12,4 @@ if (not Memoria) then Memoria = {}; end
 if GetLocale() ~= "frFR" then return end
 
 -- Localization
---@localization(local="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="Memoria.L")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="Memoria.L")@

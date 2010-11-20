@@ -14,4 +14,4 @@ if GetLocale() ~= "deDE" then return end
 --------------------
 --  Localization  --
 --------------------
---@localization(local="deDE", format="lua_additive_table", handle-unlocalized="comment", table-name="Memoria.L")@
+--@localization(locale="deDE", format="lua_additive_table", handle-unlocalized="comment", table-name="Memoria.L")@
