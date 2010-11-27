@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This localization is written by:
---  <nobody>
+--  Deepking
 --
 
 -- Check for addon table
