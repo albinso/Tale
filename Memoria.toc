@@ -1,6 +1,6 @@
-## Interface: 40200
+## Interface: 40300
 ## Title: Memoria
-## Version: 1.4
+## Version: 1.5
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
