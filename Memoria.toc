@@ -1,6 +1,6 @@
-## Interface: 50001
+## Interface: 50200
 ## Title: Memoria
-## Version: 5.0
+## Version: 5.2
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
