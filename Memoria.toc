@@ -2,7 +2,7 @@
 ## Title: Memoria
 ## Version: 5.4
 ## Notes: Memoria automatically screenshots various milestones of your characters.
-## Author: Mizukichan@EU-Thrall
+## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: Memoria_Options
