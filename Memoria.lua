@@ -4,10 +4,10 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010)
+--    * Mîzukichan @ EU-Antonidas (2010-2014)
 --
 --
---    This file is part of Mizus RaidTracker.
+--    This file is part of Memoria.
 --
 --    Memoria is free software: you can redistribute it and/or 
 --    modify it under the terms of the GNU General Public License as 
