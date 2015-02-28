@@ -1,4 +1,4 @@
-## Interface: 60000
+## Interface: 60100
 ## Title: Memoria
 ## Version: 6.0.3
 ## Notes: Memoria automatically screenshots various milestones of your characters.
