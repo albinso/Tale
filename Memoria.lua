@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2015)
+--    * Mîzukichan @ EU-Antonidas (2010-2016)
 --
 --
 --    This file is part of Memoria.
