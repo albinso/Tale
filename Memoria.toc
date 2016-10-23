@@ -1,6 +1,6 @@
 ## Interface: 70000
 ## Title: Memoria
-## Version: 7.0.0
+## Version: 7.0.1
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0

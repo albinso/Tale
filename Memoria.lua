@@ -67,6 +67,9 @@ function Memoria:EventHandler(frame, event, ...)
     
     elseif (event == "ACHIEVEMENT_EARNED") then
         Memoria:ACHIEVEMENT_EARNED_Handler()
+        
+    elseif (event == "CHALLENGE_MODE_COMPLETED") then
+        Memoria:CHALLENGE_MODE_COMPLETED_Handler()
     
     elseif (event == "CHAT_MSG_SYSTEM") then
         Memoria:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
@@ -91,6 +94,12 @@ function Memoria:ACHIEVEMENT_EARNED_Handler()
     if (not Memoria_Options.achievements) then return; end
     Memoria:AddScheduledScreenshot(1)
     Memoria:DebugMsg("Achievement - Added screenshot to queue")
+end
+
+function Memoria:CHALLENGE_MODE_COMPLETED_Handler()
+    Memoria:DebugMsg("CHALLENGE_MODE_COMPLETED_Handler() called...")
+    Memoria:AddScheduledScreenshot(1)
+    Memoria:DebugMsg("Challenge mode completed - Added screenshot to queue")
 end
 
 function Memoria:CHAT_MSG_SYSTEM_Handler(...)
@@ -183,6 +192,7 @@ end
 function Memoria:RegisterEvents(frame)
     frame:UnregisterAllEvents()
     if (Memoria_Options.achievements) then frame:RegisterEvent("ACHIEVEMENT_EARNED"); end
+    frame:RegisterEvent("CHALLENGE_MODE_COMPLETED");
     if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
     if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
