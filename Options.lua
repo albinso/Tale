@@ -1,10 +1,10 @@
 -- ********************************************************
--- **                  Memoria - Options                 **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **                      Memoria                       **
+-- **            <http://www.cosmocanyon.de>             **
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2016)
+--    * Mîzukichan @ EU-Antonidas (2010-2017)
 --
 --
 --    This file is part of Mizus RaidTracker.

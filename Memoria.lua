@@ -1,6 +1,6 @@
 -- ********************************************************
 -- **                      Memoria                       **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **            <http://www.cosmocanyon.de>             **
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
