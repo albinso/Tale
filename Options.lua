@@ -41,6 +41,7 @@ function Memoria:OptionsSave()
     Memoria_Options.arenaEndingOnlyWins = MemoriaOptions_ArenaEndingWinsOnlyCB:GetChecked()
     Memoria_Options.battlegroundEnding = MemoriaOptions_BattlegroundEndingCB:GetChecked()
     Memoria_Options.battlegroundEndingOnlyWins = MemoriaOptions_BattlegroundEndingWinsOnlyCB:GetChecked()
+    Memoria_Options.challengeDone = MemoriaOptions_ChallengeDoneCB:GetChecked()
     Memoria:RegisterEvents(MemoriaFrame)
 end
 
@@ -53,6 +54,7 @@ function Memoria:OptionsRestore()
     MemoriaOptions_ArenaEndingWinsOnlyCB:SetChecked(Memoria_Options.arenaEndingOnlyWins)
     MemoriaOptions_BattlegroundEndingCB:SetChecked(Memoria_Options.battlegroundEnding)
     MemoriaOptions_BattlegroundEndingWinsOnlyCB:SetChecked(Memoria_Options.battlegroundEndingOnlyWins)
+    MemoriaOptions_ChallengeDoneCB:SetChecked(Memoria_Options.challengeDone)
 end
 
 function Memoria:OptionsInitialize()
@@ -67,6 +69,7 @@ function Memoria:OptionsInitialize()
     MemoriaOptions_ArenaEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
     MemoriaOptions_BattlegroundEndingCB_Text:SetText(Memoria.L["battleground endings"])
     MemoriaOptions_BattlegroundEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
+    MemoriaOptions_ChallengeDoneCB_Text:SetText(Memoria.L["challenge instance endings"])
     -- parse current options
     Memoria:OptionsRestore()
 end

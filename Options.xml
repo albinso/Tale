@@ -67,6 +67,11 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB" x="20" y="-5"/>
         </Anchors>
       </CheckButton>
+      <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingWinsOnlyCB" x="-20" y="-25"/>
+        </Anchors>
+      </CheckButton>
     </Frames>
   </Frame>
 </Ui>

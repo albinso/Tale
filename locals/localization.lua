@@ -1,6 +1,6 @@
 -- ********************************************************
--- **             Memoria - enGB/enUS Local              **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **              Memoria - enGB/enUS Local             **
+-- **             <http://www.cosmocanyon.de>            **
 -- ********************************************************
 --
 -- This localization is written by:
@@ -21,4 +21,5 @@ Memoria.L = {
     ["new achievement"] = "new achievement",
     ["new reputation level"] = "new reputation level",
     ["wins only"] = "wins only",
+    ["challenge instance endings"] = "mythic+ instance endings",
 }
