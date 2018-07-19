@@ -1,12 +1,12 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: Memoria
-## Version: 7.3.0
+## Version: 8.0.0
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: Memoria_Options
-## X-Website: http://nanaki.affenfelsen.de
+## X-Website: http://cosmocanyon.de
 
 embeds.xml
 locals.xml
