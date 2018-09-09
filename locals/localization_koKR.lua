@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This localization is written by:
---  <nobody>
+--  maknae 
 --
 
 -- Check for addon table
