@@ -105,7 +105,7 @@ end
 function Memoria:CHALLENGE_MODE_COMPLETED_Handler()
     Memoria:DebugMsg("CHALLENGE_MODE_COMPLETED_Handler() called...")
     if (not Memoria_Options.challengeDone) then return; end
-    Memoria:AddScheduledScreenshot(3)
+    Memoria:AddScheduledScreenshot(5)
     Memoria:DebugMsg("Challenge mode completed - Added screenshot to queue")
 end
 
