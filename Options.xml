@@ -10,6 +10,17 @@
         </FontString>
       </Layer>
     </Layers>
+    <Scripts>
+        <OnClick>
+            local enable = self:GetChecked()
+            self:SetChecked(enable and true or false)
+            if tick then
+                PlaySound(856)
+            else
+                PlaySound(857)
+            end
+        </OnClick>
+    </Scripts>
   </CheckButton>
   <Frame name="MemoriaOptionsTemplate" virtual="true">
     <Layers>
@@ -67,9 +78,14 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB" x="20" y="-5"/>
         </Anchors>
       </CheckButton>
-      <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_BosskillsCB" inherits="MemoriaCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingWinsOnlyCB" x="-20" y="-25"/>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB" x="0" y="-5"/>
         </Anchors>
       </CheckButton>
     </Frames>

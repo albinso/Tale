@@ -16,6 +16,7 @@ Memoria.L = {
     ["Take screenshot on"] = "Take screenshot on",
     ["arena endings"] = "arena endings",
     ["battleground endings"] = "battleground endings",
+    ["bosskills"] = "boss kills",
     ["exalted only"] = "exalted only",
     ["level up"] = "level up",
     ["new achievement"] = "new achievement",

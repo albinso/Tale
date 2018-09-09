@@ -4,10 +4,10 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2017)
+--    * Mîzukichan @ EU-Antonidas (2010-2018)
 --
 --
---    This file is part of Mizus RaidTracker.
+--    This file is part of Memoria.
 --
 --    Memoria is free software: you can redistribute it and/or 
 --    modify it under the terms of the GNU General Public License as 
@@ -41,6 +41,7 @@ function Memoria:OptionsSave()
     Memoria_Options.arenaEndingOnlyWins = MemoriaOptions_ArenaEndingWinsOnlyCB:GetChecked()
     Memoria_Options.battlegroundEnding = MemoriaOptions_BattlegroundEndingCB:GetChecked()
     Memoria_Options.battlegroundEndingOnlyWins = MemoriaOptions_BattlegroundEndingWinsOnlyCB:GetChecked()
+    Memoria_Options.bosskills = MemoriaOptions_BosskillsCB:GetChecked()
     Memoria_Options.challengeDone = MemoriaOptions_ChallengeDoneCB:GetChecked()
     Memoria:RegisterEvents(MemoriaFrame)
 end
@@ -54,6 +55,7 @@ function Memoria:OptionsRestore()
     MemoriaOptions_ArenaEndingWinsOnlyCB:SetChecked(Memoria_Options.arenaEndingOnlyWins)
     MemoriaOptions_BattlegroundEndingCB:SetChecked(Memoria_Options.battlegroundEnding)
     MemoriaOptions_BattlegroundEndingWinsOnlyCB:SetChecked(Memoria_Options.battlegroundEndingOnlyWins)
+    MemoriaOptions_BosskillsCB:SetChecked(Memoria_Options.bosskills)
     MemoriaOptions_ChallengeDoneCB:SetChecked(Memoria_Options.challengeDone)
 end
 
@@ -69,6 +71,7 @@ function Memoria:OptionsInitialize()
     MemoriaOptions_ArenaEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
     MemoriaOptions_BattlegroundEndingCB_Text:SetText(Memoria.L["battleground endings"])
     MemoriaOptions_BattlegroundEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
+    MemoriaOptions_BosskillsCB_Text:SetText(Memoria.L["bosskills"])
     MemoriaOptions_ChallengeDoneCB_Text:SetText(Memoria.L["challenge instance endings"])
     -- parse current options
     Memoria:OptionsRestore()

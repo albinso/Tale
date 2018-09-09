@@ -26,7 +26,7 @@
 
 -- Check for addon table
 if (not Memoria) then Memoria = {}; end
-local Memoria = Memoria
+local Memoria = Memoria;
 
 
 ----------------------------
@@ -48,6 +48,7 @@ Memoria.DefaultOptions = {
     arenaEndingOnlyWins = false,
     battlegroundEnding = false,
     battlegroundEndingOnlyWins = false,
+    bosskills = true,
     reputationChange = true,
     reputationChangeOnlyExalted = false,
     levelUp = true,
@@ -75,6 +76,9 @@ function Memoria:EventHandler(frame, event, ...)
     elseif (event == "CHAT_MSG_SYSTEM") then
         Memoria:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
         Memoria:CHAT_MSG_SYSTEM_Handler(...)
+        
+    elseif (event == "ENCOUNTER_END") then
+        Memoria:ENCOUNTER_END_Handler(...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
         Memoria:PLAYER_LEVEL_UP_Handler()
@@ -117,6 +121,16 @@ function Memoria:CHAT_MSG_SYSTEM_Handler(...)
             Memoria:AddScheduledScreenshot(1)
             Memoria:DebugMsg("Reputation level reached exalted - Added screenshot to queue")
         end
+    end
+end
+
+function Memoria:ENCOUNTER_END_Handler(...)
+    if (not Memoria_Options.bosskills) then return; end
+    local encounterID, name, difficulty, size, success = ...
+    Memoria:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
+    if (success == 1) then 
+        Memoria:AddScheduledScreenshot(1)
+        Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
     end
 end
 
@@ -194,8 +208,9 @@ end
 function Memoria:RegisterEvents(frame)
     frame:UnregisterAllEvents()
     if (Memoria_Options.achievements) then frame:RegisterEvent("ACHIEVEMENT_EARNED"); end
-    frame:RegisterEvent("CHALLENGE_MODE_COMPLETED");
+    if (Memoria_Options.challengeDone) then frame:RegisterEvent("CHALLENGE_MODE_COMPLETED"); end
     if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
+    if (Memoria_Options.bosskills) then frame:RegisterEvent("ENCOUNTER_END"); end
     if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
 end
