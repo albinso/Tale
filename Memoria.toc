@@ -1,11 +1,12 @@
 ## Interface: 80000
 ## Title: Memoria
-## Version: 8.0.0
+## Version: 8.0-2
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: Memoria_Options
+## SavedVariablesPerCharacter: Memoria_CharBossKillDB
 ## X-Website: http://cosmocanyon.de
 
 embeds.xml

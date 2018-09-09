@@ -49,6 +49,7 @@ Memoria.DefaultOptions = {
     battlegroundEnding = false,
     battlegroundEndingOnlyWins = false,
     bosskills = true,
+    bosskillsFirstkill = false,
     reputationChange = true,
     reputationChangeOnlyExalted = false,
     levelUp = true,
@@ -128,9 +129,13 @@ function Memoria:ENCOUNTER_END_Handler(...)
     if (not Memoria_Options.bosskills) then return; end
     local encounterID, name, difficulty, size, success = ...
     Memoria:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
+    if (not encounterID) then return; end
     if (success == 1) then 
+        -- check if boss was a known kill, if "only after first kill" is enabled
+        if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[encounterID]) then return; end
         Memoria:AddScheduledScreenshot(1)
         Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
+        Memoria_CharBossKillDB[encounterID] = true
     end
 end
 
@@ -196,6 +201,9 @@ function Memoria:Initialize(frame)
         for key, val in pairs(Memoria.DefaultOptions) do
             Memoria_Options[key] = val
         end
+    end
+    if (not Memoria_BossKillDB) then
+        Memoria_CharBossKillDB = {}
     end
     Memoria:OptionsInitialize()
     Memoria:RegisterEvents(frame)

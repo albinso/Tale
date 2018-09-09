@@ -42,6 +42,7 @@ function Memoria:OptionsSave()
     Memoria_Options.battlegroundEnding = MemoriaOptions_BattlegroundEndingCB:GetChecked()
     Memoria_Options.battlegroundEndingOnlyWins = MemoriaOptions_BattlegroundEndingWinsOnlyCB:GetChecked()
     Memoria_Options.bosskills = MemoriaOptions_BosskillsCB:GetChecked()
+    Memoria_Options.bosskillsFirstkill = MemoriaOptions_BosskillsFirstkillsCB:GetChecked()
     Memoria_Options.challengeDone = MemoriaOptions_ChallengeDoneCB:GetChecked()
     Memoria:RegisterEvents(MemoriaFrame)
 end
@@ -56,6 +57,7 @@ function Memoria:OptionsRestore()
     MemoriaOptions_BattlegroundEndingCB:SetChecked(Memoria_Options.battlegroundEnding)
     MemoriaOptions_BattlegroundEndingWinsOnlyCB:SetChecked(Memoria_Options.battlegroundEndingOnlyWins)
     MemoriaOptions_BosskillsCB:SetChecked(Memoria_Options.bosskills)
+    MemoriaOptions_BosskillsFirstkillsCB:SetChecked(Memoria_Options.bosskillsFirstkill)
     MemoriaOptions_ChallengeDoneCB:SetChecked(Memoria_Options.challengeDone)
 end
 
@@ -72,6 +74,7 @@ function Memoria:OptionsInitialize()
     MemoriaOptions_BattlegroundEndingCB_Text:SetText(Memoria.L["battleground endings"])
     MemoriaOptions_BattlegroundEndingWinsOnlyCB_Text:SetText(Memoria.L["wins only"])
     MemoriaOptions_BosskillsCB_Text:SetText(Memoria.L["bosskills"])
+    MemoriaOptions_BosskillsFirstkillsCB_Text:SetText(Memoria.L["only after first kill"])
     MemoriaOptions_ChallengeDoneCB_Text:SetText(Memoria.L["challenge instance endings"])
     -- parse current options
     Memoria:OptionsRestore()

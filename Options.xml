@@ -83,9 +83,14 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingWinsOnlyCB" x="-20" y="-25"/>
         </Anchors>
       </CheckButton>
+      <CheckButton name="$parent_BosskillsFirstkillsCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB" x="20" y="-5"/>
+        </Anchors>
+      </CheckButton>
       <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB" x="0" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsFirstkillsCB" x="-20" y="-5"/>
         </Anchors>
       </CheckButton>
     </Frames>
