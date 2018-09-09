@@ -202,7 +202,7 @@ function Memoria:Initialize(frame)
             Memoria_Options[key] = val
         end
     end
-    if (not Memoria_BossKillDB) then
+    if (not Memoria_CharBossKillDB) then
         Memoria_CharBossKillDB = {}
     end
     Memoria:OptionsInitialize()
