@@ -14,7 +14,7 @@
         <OnClick>
             local enable = self:GetChecked()
             self:SetChecked(enable and true or false)
-            if tick then
+            if enable then
                 PlaySound(856)
             else
                 PlaySound(857)
