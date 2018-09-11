@@ -129,13 +129,14 @@ function Memoria:ENCOUNTER_END_Handler(...)
     if (not Memoria_Options.bosskills) then return; end
     local encounterID, name, difficulty, size, success = ...
     Memoria:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
-    if (not encounterID) then return; end
+    if ((not encounterID) or (not difficulty)) then return; end
     if (success == 1) then 
         -- check if boss was a known kill, if "only after first kill" is enabled
-        if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[encounterID]) then return; end
+        if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[difficulty][encounterID]) then return; end
         Memoria:AddScheduledScreenshot(1)
         Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
-        Memoria_CharBossKillDB[encounterID] = true
+        if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
+        Memoria_CharBossKillDB[difficulty][encounterID] = true
     end
 end
 
