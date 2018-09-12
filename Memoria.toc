@@ -1,6 +1,6 @@
 ## Interface: 80000
 ## Title: Memoria
-## Version: 8.0-2
+## Version: 8.0-3
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0
