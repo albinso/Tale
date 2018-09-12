@@ -21,7 +21,7 @@ Memoria.L = {
     ["level up"] = "level up",
     ["new achievement"] = "new achievement",
     ["new reputation level"] = "new reputation level",
-    ["only after first kill"] = "only after first kill",
+    ["only after first kill"] = "only once per difficulty",
     ["wins only"] = "wins only",
     ["challenge instance endings"] = "mythic+ instance endings",
 }
