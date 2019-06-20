@@ -1,6 +1,6 @@
 ## Interface: 80100
 ## Title: Memoria
-## Version: 8.1
+## Version: 8.1-1
 ## Notes: Memoria automatically screenshots various milestones of your characters.
 ## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0
