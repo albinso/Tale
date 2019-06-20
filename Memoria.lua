@@ -52,6 +52,7 @@ Memoria.DefaultOptions = {
     bosskillsFirstkill = false,
     reputationChange = true,
     reputationChangeOnlyExalted = false,
+    showPlayedTime = false,
     levelUp = true,
     challengeDone = false,
     version = 1,
@@ -132,10 +133,10 @@ function Memoria:ENCOUNTER_END_Handler(...)
     if ((not encounterID) or (not difficulty)) then return; end
     if (success == 1) then 
         -- check if boss was a known kill, if "only after first kill" is enabled
+        if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
         if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[difficulty][encounterID]) then return; end
         Memoria:AddScheduledScreenshot(1)
         Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
-        if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
         Memoria_CharBossKillDB[difficulty][encounterID] = true
     end
 end
@@ -271,6 +272,11 @@ function Memoria:AddScheduledScreenshot(delay)
         MemoriaFrame.running = true
         MemoriaFrame:SetScript("OnUpdate", function(self) Memoria:ScreenshotHandler(self); end)
     end
+end
+
+function Memoria:ShowPlayedTime()
+    -- implement a "lastPlayedTime" timer, just call it at max once very 3-5? seconds
+    -- WoWAPI: RequestTimePlayed()
 end
 
 
