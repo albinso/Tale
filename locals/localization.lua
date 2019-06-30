@@ -28,6 +28,7 @@ Memoria.L = {
     ["only after first kill"] = "only once per difficulty",
     ["seconds"] = "seconds",
     ["show played"] = "show /played in chat",
+    ["resize chat window"] = "Resize chat window for played message",
     ["time played"] = "Time played at level",
     ["wins only"] = "wins only",
 }

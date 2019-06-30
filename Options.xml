@@ -53,11 +53,16 @@
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
+          <CheckButton name="$parent_ResizeChatCB" inherits="MemoriaCBTemplate" parent="MemoriaOptions_LevelUpCB_ShowPlayedCB">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
         </Frames>
       </CheckButton>
       <CheckButton name="$parent_ReputationChangeCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LevelUpCB_ShowPlayedCB" x="-20" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LevelUpCB_ShowPlayedCB_ResizeChatCB" x="-40" y="-5"/>
         </Anchors>
         <Frames>
           <CheckButton name="$parent_ExaltedOnlyCB" inherits="MemoriaCBTemplate">

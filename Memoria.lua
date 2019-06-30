@@ -70,6 +70,7 @@ Memoria.DefaultOptions = {
     reputationChangeOnlyExalted = false,
     levelUp = true,
     levelUpShowPlayed = false,
+    resizeChat = false,
     challengeDone = false,
     version = 1,
 }
@@ -304,7 +305,7 @@ function Memoria:ScreenshotHandler(elapsed)
                 Memoria.queue[i] = delay - elapsed
             else
                 tinsert(rmList, i, 1)
-                if Memoria_Options.levelUpShowPlayed then
+                if Memoria_Options.levelUpShowPlayed and Memoria_Options.resizeChat then
                     Memoria.state = STATE_SHOT_DELAY
                 else
                     Memoria.state = STATE_SCREENSHOT
@@ -322,7 +323,7 @@ function Memoria:ScreenshotHandler(elapsed)
         Memoria.state = STATE_SCREENSHOT
     elseif Memoria.state == STATE_SCREENSHOT then
         Screenshot()
-        if Memoria_Options.levelUpShowPlayed then
+        if Memoria_Options.levelUpShowPlayed and Memoria_Options.resizeChat then
             -- Wait a frame to reset the chat, screenshot happens after frame ends
             Memoria.state = STATE_RESTORE_DELAY
         else
