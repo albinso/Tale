@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This localization is written by:
---  <nobody>
+--  Micehan
 --
 
 -- Check for addon table
