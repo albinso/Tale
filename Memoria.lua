@@ -110,7 +110,11 @@ function Memoria:EventHandler(frame, event, ...)
     elseif (event == "UPDATE_BATTLEFIELD_STATUS") then
         Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
     
+    elseif (event == "PLAYER_DEAD") then
+	Memoria:PLAYER_DEATH_Handler(...)
+
     end
+
 end
 
 function Memoria:ADDON_LOADED_Handler(frame)
@@ -162,6 +166,12 @@ function Memoria:ENCOUNTER_END_Handler(...)
         Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
         Memoria_CharBossKillDB[difficulty][encounterID] = true
     end
+end
+
+function Memoria:PLAYER_DEATH_Handler(level, ...)
+    Memoria:DebugMsg("PLAYER_DEATH_Handler() called...")
+    Memoria:AddScheduledScreenshot(1)
+    Memoria:DebugMsg("You died scrub - Added screenshot to queue")
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
