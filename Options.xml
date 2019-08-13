@@ -1,0 +1,118 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+ http://wowprogramming.com/FrameXML/UI.xsd">
+  <CheckButton name="MemoriaCBTemplate" virtual="true" inherits="OptionsCheckButtonTemplate">
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Text" inherits="GameFontWhite" text="Text (L)">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Scripts>
+        <OnClick>
+            local enable = self:GetChecked()
+            if enable then
+                PlaySound(856)
+            else
+                PlaySound(857)
+            end
+            Memoria:OptionsEnableDisable(self)
+        </OnClick>
+    </Scripts>
+  </CheckButton>
+  <Frame name="MemoriaOptionsTemplate" virtual="true">
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="GameFontNormalLarge" text="Title (L)">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent" x="20" y="-20"/>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_EventsHeadline" inherits="GameFontWhite" text="Make screenshot on (L)">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-20"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <CheckButton name="$parent_NewAchievementCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EventsHeadline" x="0" y="-5"/>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_LevelUpCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NewAchievementCB" x="0" y="-5"/>
+        </Anchors>
+        <Frames>
+          <CheckButton name="$parent_ShowPlayedCB" inherits="MemoriaCBTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
+          <CheckButton name="$parent_ResizeChatCB" inherits="MemoriaCBTemplate" parent="MemoriaOptions_LevelUpCB_ShowPlayedCB">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
+        </Frames>
+      </CheckButton>
+      <CheckButton name="$parent_ReputationChangeCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LevelUpCB_ShowPlayedCB_ResizeChatCB" x="-40" y="-5"/>
+        </Anchors>
+        <Frames>
+          <CheckButton name="$parent_ExaltedOnlyCB" inherits="MemoriaCBTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
+        </Frames>
+      </CheckButton>
+      <CheckButton name="$parent_ArenaEndingCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeCB_ExaltedOnlyCB" x="-20" y="-5"/>
+        </Anchors>
+        <Frames>
+          <CheckButton name="$parent_WinsOnlyCB" inherits="MemoriaCBTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
+        </Frames>
+      </CheckButton>
+      <CheckButton name="$parent_BattlegroundEndingCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+        </Anchors>
+        <Frames>
+          <CheckButton name="$parent_WinsOnlyCB" inherits="MemoriaCBTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
+        </Frames>
+      </CheckButton>
+      <CheckButton name="$parent_BosskillsCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+        </Anchors>
+        <Frames>
+          <CheckButton name="$parent_FirstkillsCB" inherits="MemoriaCBTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
+            </Anchors>
+          </CheckButton>
+        </Frames>
+      </CheckButton>
+      <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB_FirstkillsCB" x="-20" y="-5"/>
+        </Anchors>
+      </CheckButton>
+    </Frames>
+  </Frame>
+</Ui>
