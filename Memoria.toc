@@ -6,7 +6,7 @@
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: Memoria_Options
-## SavedVariablesPerCharacter: Memoria_CharBossKillDB, Memoria_CharLevelTimes
+## SavedVariablesPerCharacter: Memoria_CharBossKillDB, Memoria_CharLevelTimes, Memoria_LogData
 ## X-Website: http://cosmocanyon.de
 
 embeds.xml

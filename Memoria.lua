@@ -73,6 +73,7 @@ Memoria.DefaultOptions = {
     resizeChat = false,
     challengeDone = false,
     version = 1,
+    logInterval = 30,
 }
 
 
@@ -171,6 +172,7 @@ end
 function Memoria:PLAYER_DEATH_Handler(...)
     Memoria:DebugMsg("PLAYER_DEATH_Handler() called...")
     Memoria:AddScheduledScreenshot(1)
+    table.insert(Memoria_LogData, Memoria:GetCurrentState("death"))
     Memoria:DebugMsg("You died scrub - Added screenshot to queue")
 end
 
@@ -187,6 +189,7 @@ function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
         return
     end
     Memoria:AddScheduledScreenshot(1)
+    table.insert(Memoria_LogData, Memoria:GetCurrentState("lvl"))
     Memoria:DebugMsg("Level up - Added screenshot to queue")
 end
 
@@ -245,9 +248,21 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
     end
 end
 
+function Memoria:GetCurrentState(trigger)
+    local mapID = C_Map.GetBestMapForUnit("player")
+    local pos = C_Map.GetPlayerMapPosition(mapID, "player")
+    local x, y = pos:GetXY()
+    return format("%f, %f, %d, %d, %s", x, y, mapID, time(), trigger)
+end
+
 function Memoria:OnUpdate(elapsed)
     Memoria_CharLevelTimes[Memoria.PlayerLevel] = Memoria_CharLevelTimes[Memoria.PlayerLevel] + elapsed
     Memoria:ScreenshotHandler(elapsed)
+    self.sinceLastUpdate = (self.sinceLastUpdate or 0) + elapsed;
+    if ( self.sinceLastUpdate >= Memoria_Options['logInterval'] ) then -- in seconds
+	self.sinceLastUpdate = 0;
+	table.insert(Memoria_LogData, Memoria:GetCurrentState("std"))
+    end
 end
 
 
@@ -260,6 +275,9 @@ function Memoria:Initialize(frame)
         for key, val in pairs(Memoria.DefaultOptions) do
             Memoria_Options[key] = val
         end
+    end
+    if (not Memoria_LogData) then
+	Memoria_LogData = {}
     end
     if (not Memoria_CharBossKillDB) then
         Memoria_CharBossKillDB = {}
