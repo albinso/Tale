@@ -168,7 +168,7 @@ function Memoria:ENCOUNTER_END_Handler(...)
     end
 end
 
-function Memoria:PLAYER_DEATH_Handler(level, ...)
+function Memoria:PLAYER_DEATH_Handler(...)
     Memoria:DebugMsg("PLAYER_DEATH_Handler() called...")
     Memoria:AddScheduledScreenshot(1)
     Memoria:DebugMsg("You died scrub - Added screenshot to queue")
@@ -291,6 +291,7 @@ function Memoria:RegisterEvents(frame)
     if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
+    frame:RegisterEvent("PLAYER_DEAD");
 end
 
 
