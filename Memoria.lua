@@ -164,6 +164,7 @@ function Memoria:ENCOUNTER_END_Handler(...)
         if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
         if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[difficulty][encounterID]) then return; end
         Memoria:AddScheduledScreenshot(1)
+    	table.insert(Memoria_LogData, Memoria:GetCurrentState("boss"))
         Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
         Memoria_CharBossKillDB[difficulty][encounterID] = true
     end
