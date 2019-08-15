@@ -175,10 +175,8 @@ function Memoria:COMBAT_LOG_Handler(...)
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
     if not (destName == UnitName("player")) then return; end
     if (subevent == "SPELL_DAMAGE" or subevent == "SPELL_PERIODIC_DAMAGE" or subevent == "RANGE_DAMAGE") and suffixParam2 > 0 then
-	print("["..sourceName.."] killed ["..destName.."] with "..suffixParam1.." "..GetSpellLink(prefixParam1))
 	Memoria:SaveCurrentState(format("death, %s", sourceName))
     elseif subevent == "SWING_DAMAGE" and prefixParam2 > 0 then
-	print("["..sourceName.."] killed ["..destName.."] with "..prefixParam1.." Melee")
 	Memoria:SaveCurrentState(format("death, %s", sourceName))
     end
 end
@@ -259,7 +257,7 @@ function Memoria:SaveCurrentState(trigger)
     local mapID = C_Map.GetBestMapForUnit("player")
     local pos = C_Map.GetPlayerMapPosition(mapID, "player")
     local x, y = pos:GetXY()
-    table.insert(Memoria_LogData, format("%f, %f, %d, %d, %s, %d", x, y, mapID, time(), trigger, Memoria.PlayerLevel))
+    table.insert(Memoria_LogData, format("%f, %f, %d, %d, %d, %s", x, y, mapID, time(), Memoria.PlayerLevel, trigger))
 end
 
 function Memoria:OnUpdate(elapsed)
