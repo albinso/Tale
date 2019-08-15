@@ -114,6 +114,12 @@ function Memoria:EventHandler(frame, event, ...)
     elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then
 	Memoria:COMBAT_LOG_Handler(...)
 
+    elseif (event == "PLAYER_ALIVE" or event == "PLAYER_UNGHOST") then
+	Memoria:RESS_Handler(...)
+
+    elseif (event == "PLAYER_DEAD") then
+	Memoria:PLAYER_DEAD_Handler(...)
+
     end
 
 end
@@ -170,14 +176,22 @@ function Memoria:ENCOUNTER_END_Handler(...)
     end
 end
 
+function Memoria:PLAYER_DEAD_Handler(...)
+    Memoria:DebugMsg("PLAYER_DEAD_Handler() called...")
+    Memoria:SaveCurrentState(format("death, %s", Memoria.LastAttack)) -- Does not account for environmental damage
+    Memoria:AddScheduledScreenshot(1)
+end
+
 
 function Memoria:COMBAT_LOG_Handler(...)
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
     if not (destName == UnitName("player")) then return; end
-    if (subevent == "SPELL_DAMAGE" or subevent == "SPELL_PERIODIC_DAMAGE" or subevent == "RANGE_DAMAGE") and suffixParam2 > 0 then
-	Memoria:SaveCurrentState(format("death, %s", sourceName))
-    elseif subevent == "SWING_DAMAGE" and prefixParam2 > 0 then
-	Memoria:SaveCurrentState(format("death, %s", sourceName))
+    if (subevent == "SPELL_DAMAGE" or subevent == "SPELL_PERIODIC_DAMAGE" or subevent == "RANGE_DAMAGE") then -- and (suffixParam2 > 0 or UnitIsDeadOrGhost("player")) then
+	--Memoria:SaveCurrentState(format("death, %s", sourceName))
+	Memoria.LastAttack = sourceName
+    elseif subevent == "SWING_DAMAGE" then --and (prefixParam2 > 0 or UnitIsDeadOrGhost("player")) then
+	-- Memoria:SaveCurrentState(format("death, %s", sourceName))
+	Memoria.LastAttack = sourceName
     end
 end
 
@@ -207,6 +221,11 @@ function Memoria:PLAYER_LEVEL_UP_SHOW_PLAYED_Handler(...)
     Memoria:ShowPrevious()
     Memoria:AddScheduledScreenshot(0)
     Memoria:DebugMsg("Level up show played - Added screenshot to queue")
+end
+
+function Memoria:RESS_Handler(...)
+    Memoria:DebugMsg("RESS_Handler() called...")
+    Memoria:StandardStateSave()
 end
 
 function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
@@ -260,13 +279,21 @@ function Memoria:SaveCurrentState(trigger)
     table.insert(Memoria_LogData, format("%f, %f, %d, %d, %d, %s", x, y, mapID, time(), Memoria.PlayerLevel, trigger))
 end
 
+function Memoria:StandardStateSave()
+    if UnitIsGhost("player") then
+	Memoria:SaveCurrentState("ghst")
+    else
+	Memoria:SaveCurrentState("std")
+    end
+end
+
 function Memoria:OnUpdate(elapsed)
     Memoria_CharLevelTimes[Memoria.PlayerLevel] = Memoria_CharLevelTimes[Memoria.PlayerLevel] + elapsed
     Memoria:ScreenshotHandler(elapsed)
     self.sinceLastUpdate = (self.sinceLastUpdate or Memoria_Options['logInterval']) + elapsed;
     if ( self.sinceLastUpdate >= Memoria_Options['logInterval'] ) then -- in seconds
 	self.sinceLastUpdate = 0;
-	Memoria:SaveCurrentState("std")
+	Memoria:StandardStateSave()
     end
 end
 
@@ -315,6 +342,10 @@ function Memoria:RegisterEvents(frame)
     if (Memoria_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    frame:RegisterEvent("PLAYER_ALIVE")
+    frame:RegisterEvent("PLAYER_UNGHOST")
+    frame:RegisterEvent("PLAYER_DEAD")
+
 end
 
 
