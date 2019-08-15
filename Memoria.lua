@@ -110,9 +110,9 @@ function Memoria:EventHandler(frame, event, ...)
         
     elseif (event == "UPDATE_BATTLEFIELD_STATUS") then
         Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
-    
-    elseif (event == "PLAYER_DEAD") then
-	Memoria:PLAYER_DEATH_Handler(...)
+
+    elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then
+	Memoria:COMBAT_LOG_Handler(...)
 
     end
 
@@ -160,26 +160,33 @@ function Memoria:ENCOUNTER_END_Handler(...)
     Memoria:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
     if ((not encounterID) or (not difficulty)) then return; end
     if (success == 1) then 
+    	Memoria:SaveCurrentState(format("%s, %d", "boss", encounterID))
         -- check if boss was a known kill, if "only after first kill" is enabled
         if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
         if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[difficulty][encounterID]) then return; end
         Memoria:AddScheduledScreenshot(1)
-    	Memoria:SaveCurrentState(format("%s, %d", "boss", encounterID))
         Memoria:DebugMsg("Encounter successful - Added screenshot to queue")
         Memoria_CharBossKillDB[difficulty][encounterID] = true
     end
 end
 
-function Memoria:PLAYER_DEATH_Handler(...)
-    Memoria:DebugMsg("PLAYER_DEATH_Handler() called...")
-    Memoria:AddScheduledScreenshot(1)
-    Memoria:SaveCurrentState("death")
-    Memoria:DebugMsg("You died scrub - Added screenshot to queue")
+
+function Memoria:COMBAT_LOG_Handler(...)
+    local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
+    if not (destName == UnitName("player")) then return; end
+    if (subevent == "SPELL_DAMAGE" or subevent == "SPELL_PERIODIC_DAMAGE" or subevent == "RANGE_DAMAGE") and suffixParam2 > 0 then
+	print("["..sourceName.."] killed ["..destName.."] with "..suffixParam1.." "..GetSpellLink(prefixParam1))
+	Memoria:SaveCurrentState(format("death, %s", sourceName))
+    elseif subevent == "SWING_DAMAGE" and prefixParam2 > 0 then
+	print("["..sourceName.."] killed ["..destName.."] with "..prefixParam1.." Melee")
+	Memoria:SaveCurrentState(format("death, %s", sourceName))
+    end
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
     Memoria:DebugMsg("PLAYER_LEVEL_UP_Handler() called...")
     Memoria.PlayerLevel = level
+    Memoria:SaveCurrentState("lvl")
     if not Memoria_CharLevelTimes[Memoria.PlayerLevel] then
         Memoria_CharLevelTimes[Memoria.PlayerLevel] = 0
     end
@@ -190,7 +197,6 @@ function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
         return
     end
     Memoria:AddScheduledScreenshot(1)
-    Memoria:SaveCurrentState("lvl")
     Memoria:DebugMsg("Level up - Added screenshot to queue")
 end
 
@@ -310,7 +316,7 @@ function Memoria:RegisterEvents(frame)
     if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
-    frame:RegisterEvent("PLAYER_DEAD");
+    frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 end
 
 
