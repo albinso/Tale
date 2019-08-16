@@ -274,8 +274,19 @@ end
 
 function Memoria:SaveCurrentState(trigger)
     local mapID = C_Map.GetBestMapForUnit("player")
-    local pos = C_Map.GetPlayerMapPosition(mapID, "player")
-    local x, y = pos:GetXY()
+    local pos = nil
+    if not (mapID == nil) then
+        pos = C_Map.GetPlayerMapPosition(mapID, "player")
+    end
+    local x, y = -1, -1
+    if (pos == nil) then
+	x, y = -1, -1
+    else
+        x, y = pos:GetXY()
+    end
+    if (mapID == nil) then
+	mapID = -1
+    end
     table.insert(Memoria_LogData, format("%f, %f, %d, %d, %d, %s", x, y, mapID, time(), Memoria.PlayerLevel, trigger))
 end
 
