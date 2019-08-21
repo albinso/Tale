@@ -120,6 +120,12 @@ function Memoria:EventHandler(frame, event, ...)
     elseif (event == "PLAYER_DEAD") then
 	Memoria:PLAYER_DEAD_Handler(...)
 
+    elseif (event == "PLAYER_CONTROL_LOST") then
+	Memoria:PLAYER_CONTROL_LOST_Handler(...)
+
+    elseif (event == "PLAYER_CONTROL_GAINED") then
+	Memoria:PLAYER_CONTROL_GAINED_Handler(...)
+
     end
 
 end
@@ -158,6 +164,14 @@ function Memoria:CHAT_MSG_SYSTEM_Handler(...)
             Memoria:DebugMsg("Reputation level reached exalted - Added screenshot to queue")
         end
     end
+end
+
+function Memoria:PLAYER_CONTROL_LOST_Handler(...)
+    Memoria:StandardStateSave()
+end
+
+function Memoria:PLAYER_CONTROL_GAINED_Handler(...)
+    Memoria:StandardStateSave()
 end
 
 function Memoria:ENCOUNTER_END_Handler(...)
@@ -293,6 +307,8 @@ end
 function Memoria:StandardStateSave()
     if UnitIsGhost("player") then
 	Memoria:SaveCurrentState("ghst")
+    if UnitOnTaxi("player") then
+	Memoria:SaveCurrentState("flght")
     else
 	Memoria:SaveCurrentState("std")
     end
@@ -356,6 +372,8 @@ function Memoria:RegisterEvents(frame)
     frame:RegisterEvent("PLAYER_ALIVE")
     frame:RegisterEvent("PLAYER_UNGHOST")
     frame:RegisterEvent("PLAYER_DEAD")
+    frame:RegisterEvent("PLAYER_CONTROL_LOST")
+    frame:RegisterEvent("PLAYER_CONTROL_GAINED")
 
 end
 
