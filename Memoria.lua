@@ -73,7 +73,7 @@ Memoria.DefaultOptions = {
     resizeChat = false,
     challengeDone = false,
     version = 1,
-    logInterval = 30,
+    logInterval = 10,
 }
 
 
@@ -209,6 +209,8 @@ function Memoria:COMBAT_LOG_Handler(...)
     elseif subevent == "SWING_DAMAGE" then --and (prefixParam2 > 0 or UnitIsDeadOrGhost("player")) then
 	-- Memoria:SaveCurrentState(format("death, %s", sourceName))
 	Memoria.LastAttack = sourceName
+    elseif subevent == "ENVIRONMENTAL_DAMAGE" then
+	Memoria.LastAttack = prefixParam1
     end
 end
 
@@ -314,7 +316,7 @@ end
 function Memoria:StandardStateSave()
     if UnitIsGhost("player") then
 	Memoria:SaveCurrentState("ghst")
-    if UnitOnTaxi("player") then
+    elseif UnitOnTaxi("player") then
 	Memoria:SaveCurrentState("flght")
     else
 	Memoria:SaveCurrentState("std")
