@@ -126,6 +126,9 @@ function Memoria:EventHandler(frame, event, ...)
     elseif (event == "PLAYER_CONTROL_GAINED") then
 	Memoria:PLAYER_CONTROL_GAINED_Handler(...)
 
+    elseif (event == "PLAYER_PVP_KILLS_CHANGED") then
+	Memoria:PLAYER_PVP_KILLS_CHANGED_Handler(...)
+
     end
 
 end
@@ -207,6 +210,10 @@ function Memoria:COMBAT_LOG_Handler(...)
 	-- Memoria:SaveCurrentState(format("death, %s", sourceName))
 	Memoria.LastAttack = sourceName
     end
+end
+
+function Memoria:PLAYER_PVP_KILLS_CHANGED_Handler(unitTarget)
+    Memoria:SaveCurrentState(format("pvpk, %s", unitTarget))
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
@@ -374,6 +381,7 @@ function Memoria:RegisterEvents(frame)
     frame:RegisterEvent("PLAYER_DEAD")
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
+    frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
 
 end
 
