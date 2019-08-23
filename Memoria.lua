@@ -74,6 +74,13 @@ Memoria.DefaultOptions = {
     challengeDone = false,
     version = 1,
     logInterval = 10,
+    pvpKill = false,
+    pvpKillLog = true,
+    death = false,
+    deathLog = true,
+    battlegroundEndingLog = true,
+    levelUpLog = true,
+    bosskillsLog = true,
 }
 
 
@@ -178,12 +185,12 @@ function Memoria:PLAYER_CONTROL_GAINED_Handler(...)
 end
 
 function Memoria:ENCOUNTER_END_Handler(...)
-    if (not Memoria_Options.bosskills) then return; end
     local encounterID, name, difficulty, size, success = ...
     Memoria:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
     if ((not encounterID) or (not difficulty)) then return; end
     if (success == 1) then 
-    	Memoria:SaveCurrentState(format("%s, %d", "boss", encounterID))
+    	if (Memoria_Options.bosskillsLog) then Memoria:SaveCurrentState(format("%s, %d", "boss", encounterID)); end
+	if (not Memoria_Options.bosskills) then return; end
         -- check if boss was a known kill, if "only after first kill" is enabled
         if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
         if (Memoria_Options.bosskillsFirstkill and Memoria_CharBossKillDB[difficulty][encounterID]) then return; end
@@ -195,8 +202,8 @@ end
 
 function Memoria:PLAYER_DEAD_Handler(...)
     Memoria:DebugMsg("PLAYER_DEAD_Handler() called...")
-    Memoria:SaveCurrentState(format("death, %s", Memoria.LastAttack)) -- Does not account for environmental damage
-    Memoria:AddScheduledScreenshot(1)
+    if (Memoria_Options.deathLog) then Memoria:SaveCurrentState(format("death, %s", Memoria.LastAttack)); end
+    if (Memoria_Options.death) then Memoria:AddScheduledScreenshot(1); end
 end
 
 
@@ -215,16 +222,18 @@ function Memoria:COMBAT_LOG_Handler(...)
 end
 
 function Memoria:PLAYER_PVP_KILLS_CHANGED_Handler(unitTarget)
-    Memoria:SaveCurrentState(format("pvpk, %s", unitTarget))
+    Memoria:DebugMsg("PLAYER_PVP_KILLS_CHANGED_Handler() called...")
+    if (Memoria_Options.pvpKillsLog) then Memoria:SaveCurrentState(format("pvpk, %s", unitTarget)); end
+    if (Memoria_Options.pvpKills) then Memoria:AddScheduledScreenshot(1); end
 end
 
 function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
     Memoria:DebugMsg("PLAYER_LEVEL_UP_Handler() called...")
     Memoria.PlayerLevel = level
-    Memoria:SaveCurrentState("lvl")
     if not Memoria_CharLevelTimes[Memoria.PlayerLevel] then
         Memoria_CharLevelTimes[Memoria.PlayerLevel] = 0
     end
+    if (Memoria_Options.levelUpLog) then Memoria:SaveCurrentState("lvl"); end
     if (not Memoria_Options.levelUp) then return; end
     if (Memoria_Options.levelUpShowPlayed) then
         Memoria.WaitForTimePlayed = true
@@ -254,7 +263,7 @@ end
 function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
     Memoria:DebugMsg("UPDATE_BATTLEFIELD_STATUS_Handler() called...")
     -- if not activated, return
-    if (not Memoria_Options.battlegroundEnding and not Memoria_Options.arenaEnding) then return; end
+    if (not Memoria_Options.battlegroundEnding and not Memoria_Options.battlegroundEndingLog and not Memoria_Options.arenaEnding) then return; end
     -- if not ended, return
     local winner = GetBattlefieldWinner()                                                                             -- possible values: nil (no winner yet), 0 (Horde / green Team), 1 (Alliance / gold Team)
     if (winner == nil) then 
@@ -279,18 +288,20 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
             end
         end
     else
-        if (not Memoria_Options.battlegroundEnding) then return; end
-        if (not Memoria_Options.battlegroundEndingOnlyWins) then
-            Memoria:AddScheduledScreenshot(1)
-            Memoria.BattlefieldScreenshotAlreadyTaken = true
-            Memoria:DebugMsg("Battleground ended - Added screenshot to queue")
-        else
-            local playerFaction = UnitFactionGroup("player")                                                          -- playerFaction is either "Alliance" or "Horde"
-            if ( (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) ) then
-                Memoria:AddScheduledScreenshot(1)
-                Memoria.BattlefieldScreenshotAlreadyTaken = true
-                Memoria:DebugMsg("Battleground won - Added screenshot to queue")
-            end
+	local playerFaction = UnitFactionGroup("player")
+	local win = (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) 
+	local stateString = "lost"	
+	if (win) then
+	    stateString = "won"
+	end
+	-- playerFaction is either "Alliance" or "Horde"
+	if (not Memoria_Options.battlegroundEndingOnlyWins or win) then
+	    if (Memoria_Options.battlegroundEndingLog) then Memoria:SaveCurrentState(format("bg, %s", stateString)); end
+	    if (Memoria_Options.battlegroundEnding) then
+		Memoria:AddScheduledScreenshot(1)
+		Memoria.BattlefieldScreenshotAlreadyTaken = true
+		Memoria:DebugMsg("Battleground won - Added screenshot to queue")
+	    end
         end
     end
 end
@@ -373,17 +384,19 @@ function Memoria:RegisterEvents(frame)
         if (Memoria_Options.challengeDone) then frame:RegisterEvent("CHALLENGE_MODE_COMPLETED"); end
     end
     if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
-    if (Memoria_Options.bosskills) then frame:RegisterEvent("ENCOUNTER_END"); end
-    if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
+    if (Memoria_Options.bosskills or Memoria_Options.bosskillsLog) then frame:RegisterEvent("ENCOUNTER_END"); end
+    if (Memoria_Options.levelUp or Memoria_Options.levelUpLog) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
-    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
-    frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding or Memoria_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
+    if (Memoria_Options.deathLog) then 
+	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    end
     frame:RegisterEvent("PLAYER_ALIVE")
     frame:RegisterEvent("PLAYER_UNGHOST")
-    frame:RegisterEvent("PLAYER_DEAD")
+    if (Memoria_Options.death or Memoria_Options.deathLog) then frame:RegisterEvent("PLAYER_DEAD"); end
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
-    frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
+    if (Memoria_Options.pvpKill or Memoria_Options.pvpKillLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
 
 end
 
