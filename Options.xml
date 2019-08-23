@@ -154,9 +154,14 @@
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_PvPKillLogCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_BosskillsLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_QuestTurnInLogCB" inherits="MemoriaCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_PvPKillCB" x="0" y="-5"/>
+	</Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_BosskillsLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_QuestTurnInLogCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
       <CheckButton name="$parent_BosskillsCB" inherits="MemoriaCBTemplate">

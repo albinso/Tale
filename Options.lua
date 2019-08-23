@@ -79,6 +79,7 @@ function Memoria:OptionsSave()
     Memoria_Options.pvpKillLog = MemoriaOptions_PvPKillLogCB:GetChecked()
     Memoria_Options.pvpKill = MemoriaOptions_PvPKillCB:GetChecked()
     Memoria_Options.logInterval = math.floor(MemoriaOptions_LogIntervalSlider:GetValue())
+    Memoria_Options.questTurnInLog = MemoriaOptions_QuestTurnInLogCB:GetChecked()
 
     Memoria:RegisterEvents(MemoriaFrame)
 end
@@ -134,6 +135,9 @@ function Memoria:OptionsRestore()
 
     MemoriaOptions_LogIntervalSlider_Text:SetText(Memoria_Options.logInterval)
     MemoriaOptions_LogIntervalSlider:SetValue(Memoria_Options.logInterval)
+
+    MemoriaOptions_QuestTurnInLogCB:SetChecked(Memoria_Options.questTurnInLog)
+    Memoria:OptionsEnableDisable(MemoriaOptions_QuestTurnInLogCB)
 end
 
 function Memoria:OptionsInitialize()
@@ -169,6 +173,8 @@ function Memoria:OptionsInitialize()
 
     MemoriaOptions_PvPKillLogCB_Text:SetText(Memoria.L["pvp kills log"])
     MemoriaOptions_PvPKillCB_Text:SetText(Memoria.L["pvp kills"])
+
+    MemoriaOptions_QuestTurnInLogCB_Text:SetText(Memoria.L["quest turn in log"])
 
     MemoriaOptions_LogIntervalSlider:SetScript("OnUpdate", function (self, elapsed) MemoriaOptions_LogIntervalSlider_Text:SetText(math.floor(MemoriaOptions_LogIntervalSlider:GetValue())) end)
     -- parse current options

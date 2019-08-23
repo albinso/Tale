@@ -33,6 +33,7 @@ Memoria.L = {
     ["only after first kill"] = "only once per difficulty",
     ["pvp kills"] = "pvp kills",
     ["pvp kills log"] = "pvp kills log",
+    ["quest turn in log"] = "quest turn in log",
     ["seconds"] = "seconds",
     ["show played"] = "show /played in chat",
     ["resize chat window"] = "Resize chat window for played message",

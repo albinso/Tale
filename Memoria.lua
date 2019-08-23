@@ -81,6 +81,7 @@ Memoria.DefaultOptions = {
     battlegroundEndingLog = true,
     levelUpLog = true,
     bosskillsLog = true,
+    questTurnInLog = true,
 }
 
 
@@ -135,6 +136,9 @@ function Memoria:EventHandler(frame, event, ...)
 
     elseif (event == "PLAYER_PVP_KILLS_CHANGED") then
 	Memoria:PLAYER_PVP_KILLS_CHANGED_Handler(...)
+
+    elseif (event == "QUEST_TURNED_IN") then
+	Memoria:QUEST_TURNED_IN_Handler(...)
 
     end
 
@@ -253,6 +257,12 @@ function Memoria:PLAYER_LEVEL_UP_SHOW_PLAYED_Handler(...)
     Memoria:ShowPrevious()
     Memoria:AddScheduledScreenshot(0)
     Memoria:DebugMsg("Level up show played - Added screenshot to queue")
+end
+
+function Memoria:QUEST_TURNED_IN_Handler(...)
+    Memoria:DebugMsg("QUEST_TURNED_IN_Handler() called...")
+    local id, xp, money = ...
+    Memoria:SaveCurrentState(format("quest, %s", id))
 end
 
 function Memoria:RESS_Handler(...)
@@ -397,6 +407,7 @@ function Memoria:RegisterEvents(frame)
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
     if (Memoria_Options.pvpKill or Memoria_Options.pvpKillLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
+    if (Memoria_Options.questTurnInLog) then frame:RegisterEvent("QUEST_TURNED_IN"); end
 
 end
 
