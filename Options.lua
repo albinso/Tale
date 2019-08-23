@@ -57,6 +57,8 @@ function Memoria:OptionsEnableDisable(cbFrame)
 end
 
 function Memoria:OptionsSave()
+    print("Saving options")
+
     Memoria_Options.achievements = MemoriaOptions_NewAchievementCB:GetChecked()
     Memoria_Options.levelUp = MemoriaOptions_LevelUpCB:GetChecked()
     Memoria_Options.levelUpShowPlayed = MemoriaOptions_LevelUpCB_ShowPlayedCB:GetChecked()
@@ -70,15 +72,13 @@ function Memoria:OptionsSave()
     Memoria_Options.bosskills = MemoriaOptions_BosskillsCB:GetChecked()
     Memoria_Options.bosskillsFirstkill = MemoriaOptions_BosskillsCB_FirstkillsCB:GetChecked()
     Memoria_Options.challengeDone = MemoriaOptions_ChallengeDoneCB:GetChecked()
-
     Memoria_Options.levelUpLog = MemoriaOptions_LevelUpLogCB:GetChecked()
     Memoria_Options.bosskillsLog = MemoriaOptions_BosskillsLogCB:GetChecked()
     Memoria_Options.deathLog = MemoriaOptions_DeathLogCB:GetChecked()
     Memoria_Options.death = MemoriaOptions_DeathCB:GetChecked()
-    Memoria_Options.battlegroundEndingLog = MemoriaOptions_BattleGroundEndingLogCB:GetChecked()
+    Memoria_Options.battlegroundEndingLog = MemoriaOptions_BattlegroundEndingLogCB:GetChecked()
     Memoria_Options.pvpKillLog = MemoriaOptions_PvPKillLogCB:GetChecked()
     Memoria_Options.pvpKill = MemoriaOptions_PvPKillCB:GetChecked()
-    
 
     Memoria:RegisterEvents(MemoriaFrame)
 end
