@@ -57,7 +57,6 @@ function Memoria:OptionsEnableDisable(cbFrame)
 end
 
 function Memoria:OptionsSave()
-    print("Saving options")
 
     Memoria_Options.achievements = MemoriaOptions_NewAchievementCB:GetChecked()
     Memoria_Options.levelUp = MemoriaOptions_LevelUpCB:GetChecked()
@@ -79,6 +78,7 @@ function Memoria:OptionsSave()
     Memoria_Options.battlegroundEndingLog = MemoriaOptions_BattlegroundEndingLogCB:GetChecked()
     Memoria_Options.pvpKillLog = MemoriaOptions_PvPKillLogCB:GetChecked()
     Memoria_Options.pvpKill = MemoriaOptions_PvPKillCB:GetChecked()
+    Memoria_Options.logInterval = math.floor(MemoriaOptions_LogIntervalSlider:GetValue())
 
     Memoria:RegisterEvents(MemoriaFrame)
 end
@@ -131,6 +131,9 @@ function Memoria:OptionsRestore()
 
     MemoriaOptions_PvPKillLogCB:SetChecked(Memoria_Options.pvpKillLog)
     Memoria:OptionsEnableDisable(MemoriaOptions_PvPKillLogCB)
+
+    MemoriaOptions_LogIntervalSlider_Text:SetText(Memoria_Options.logInterval)
+    MemoriaOptions_LogIntervalSlider:SetValue(Memoria_Options.logInterval)
 end
 
 function Memoria:OptionsInitialize()
@@ -166,6 +169,8 @@ function Memoria:OptionsInitialize()
 
     MemoriaOptions_PvPKillLogCB_Text:SetText(Memoria.L["pvp kills log"])
     MemoriaOptions_PvPKillCB_Text:SetText(Memoria.L["pvp kills"])
+
+    MemoriaOptions_LogIntervalSlider:SetScript("OnUpdate", function (self, elapsed) MemoriaOptions_LogIntervalSlider_Text:SetText(math.floor(MemoriaOptions_LogIntervalSlider:GetValue())) end)
     -- parse current options
     Memoria:OptionsRestore()
 end

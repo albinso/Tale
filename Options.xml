@@ -1,5 +1,27 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
  http://wowprogramming.com/FrameXML/UI.xsd">
+  <Slider name="MemoriaSliderTemplate" orientation="HORIZONTAL" enableMouse="true" virtual="true">
+    <Size x="144" y="17"/>
+    <HitRectInsets left="0" right="0" top="-10" bottom="-10"/>
+    <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background"
+        edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+      <EdgeSize val="8"/>
+      <TileSize val="8"/>
+      <BackgroundInsets left="3" right="3" top="6" bottom="6"/>
+    </Backdrop>
+    <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
+      <Size x="32" y="32"/>
+    </ThumbTexture>
+    <Layers>
+      <Layer level="OVERLAY">
+    <FontString name="$parent_Text" inherits="GameFontWhite" text="0">
+      <Anchors>
+	<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="0" y="-5"/>
+      </Anchors>
+    </FontString>
+  </Layer>
+</Layers>
+  </Slider>
   <CheckButton name="MemoriaCBTemplate" virtual="true" inherits="OptionsCheckButtonTemplate">
     <Layers>
       <Layer level="OVERLAY">
@@ -38,11 +60,17 @@
       </Layer>
     </Layers>
     <Frames>
-      <CheckButton name="$parent_NewAchievementCB" inherits="MemoriaCBTemplate">
+      <Slider name="$parent_LogIntervalSlider" inherits="MemoriaSliderTemplate" minValue="1" maxValue="120" valueStep="1">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EventsHeadline" x="0" y="-5"/>
         </Anchors>
+      </Slider>
+      <CheckButton name="$parent_NewAchievementCB" inherits="MemoriaCBTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogIntervalSlider" x="0" y="-5"/>
+        </Anchors>
       </CheckButton>
+
       <CheckButton name="$parent_DeathLogCB" inherits="MemoriaCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NewAchievementCB" x="0" y="-5"/>
