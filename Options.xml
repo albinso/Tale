@@ -43,9 +43,24 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EventsHeadline" x="0" y="-5"/>
         </Anchors>
       </CheckButton>
+      <CheckButton name="$parent_DeathLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NewAchievementCB" x="0" y="-5"/>
+	</Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_DeathCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_DeathLogCB" x="0" y="-5"/>
+	</Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_LevelUpLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_DeathCB" x="0" y="-5"/>
+	</Anchors>
+      </CheckButton>
       <CheckButton name="$parent_LevelUpCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NewAchievementCB" x="0" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LevelUpLogCB" x="0" y="-5"/>
         </Anchors>
         <Frames>
           <CheckButton name="$parent_ShowPlayedCB" inherits="MemoriaCBTemplate">
@@ -84,9 +99,14 @@
           </CheckButton>
         </Frames>
       </CheckButton>
+      <CheckButton name="$parent_BattlegroundEndingLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+	</Anchors>
+      </CheckButton>
       <CheckButton name="$parent_BattlegroundEndingCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingLogCB" x="0" y="-5"/>
         </Anchors>
         <Frames>
           <CheckButton name="$parent_WinsOnlyCB" inherits="MemoriaCBTemplate">
@@ -96,9 +116,24 @@
           </CheckButton>
         </Frames>
       </CheckButton>
+      <CheckButton name="$parent_PvPKillLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+	</Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_PvPKillCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_PvPKillLogCB" x="0" y="-5"/>
+	</Anchors>
+      </CheckButton>
+      <CheckButton name="$parent_BosskillsLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_PvPKillCB" x="0" y="-5"/>
+	</Anchors>
+      </CheckButton>
       <CheckButton name="$parent_BosskillsCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsLogCB" x="0" y="-5"/>
         </Anchors>
         <Frames>
           <CheckButton name="$parent_FirstkillsCB" inherits="MemoriaCBTemplate">

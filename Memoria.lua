@@ -74,6 +74,13 @@ Memoria.DefaultOptions = {
     challengeDone = false,
     version = 1,
     logInterval = 10,
+    pvpKill = false,
+    pvpKillLog = true,
+    death = false,
+    deathLog = true,
+    battlegroundEndingLog = true,
+    levelUpLog = true,
+    bosskillsLog = true,
 }
 
 
@@ -373,17 +380,17 @@ function Memoria:RegisterEvents(frame)
         if (Memoria_Options.challengeDone) then frame:RegisterEvent("CHALLENGE_MODE_COMPLETED"); end
     end
     if (Memoria_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
-    if (Memoria_Options.bosskills) then frame:RegisterEvent("ENCOUNTER_END"); end
-    if (Memoria_Options.levelUp) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
+    if (Memoria_Options.bosskills or Memoria_Options.bosskillsLog) then frame:RegisterEvent("ENCOUNTER_END"); end
+    if (Memoria_Options.levelUp or Memoria_Options.levelUpLog) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
-    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
-    frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding or Memoria_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
+    if (Memoria_Options.deathLog) then frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED"); end
     frame:RegisterEvent("PLAYER_ALIVE")
     frame:RegisterEvent("PLAYER_UNGHOST")
-    frame:RegisterEvent("PLAYER_DEAD")
+    if (Memoria_Options.death or Memoria_Options.deathLog) then frame:RegisterEvent("PLAYER_DEAD"); end
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
-    frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
+    if (Memoria_Options.pvpKill or Memoria_Options.pvpKillLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
 
 end
 

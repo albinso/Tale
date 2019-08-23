@@ -70,6 +70,16 @@ function Memoria:OptionsSave()
     Memoria_Options.bosskills = MemoriaOptions_BosskillsCB:GetChecked()
     Memoria_Options.bosskillsFirstkill = MemoriaOptions_BosskillsCB_FirstkillsCB:GetChecked()
     Memoria_Options.challengeDone = MemoriaOptions_ChallengeDoneCB:GetChecked()
+
+    Memoria_Options.levelUpLog = MemoriaOptions_LevelUpLogCB:GetChecked()
+    Memoria_Options.bosskillsLog = MemoriaOptions_BosskillsLogCB:GetChecked()
+    Memoria_Options.deathLog = MemoriaOptions_DeathLogCB:GetChecked()
+    Memoria_Options.death = MemoriaOptions_DeathCB:GetChecked()
+    Memoria_Options.battlegroundEndingLog = MemoriaOptions_BattleGroundEndingLogCB:GetChecked()
+    Memoria_Options.pvpKillLog = MemoriaOptions_PvPKillLogCB:GetChecked()
+    Memoria_Options.pvpKill = MemoriaOptions_PvPKillCB:GetChecked()
+    
+
     Memoria:RegisterEvents(MemoriaFrame)
 end
 
@@ -100,6 +110,27 @@ function Memoria:OptionsRestore()
     Memoria:OptionsEnableDisable(MemoriaOptions_BosskillsCB)
     MemoriaOptions_ChallengeDoneCB:SetChecked(Memoria_Options.challengeDone)
     Memoria:OptionsEnableDisable(MemoriaOptions_ChallengeDoneCB)
+    
+    MemoriaOptions_LevelUpLogCB:SetChecked(Memoria_Options.levelUpLog)
+    Memoria:OptionsEnableDisable(MemoriaOptions_LevelUpLogCB)
+
+    MemoriaOptions_BosskillsLogCB:SetChecked(Memoria_Options.bosskillsLog)
+    Memoria:OptionsEnableDisable(MemoriaOptions_BosskillsLogCB)
+
+    MemoriaOptions_DeathLogCB:SetChecked(Memoria_Options.deathLog)
+    Memoria:OptionsEnableDisable(MemoriaOptions_DeathLogCB)
+    
+    MemoriaOptions_DeathCB:SetChecked(Memoria_Options.death)
+    Memoria:OptionsEnableDisable(MemoriaOptions_DeathCB)
+
+    MemoriaOptions_BattlegroundEndingLogCB:SetChecked(Memoria_Options.battlegroundEndingLog)
+    Memoria:OptionsEnableDisable(MemoriaOptions_BattlegroundEndingLogCB)
+
+    MemoriaOptions_PvPKillCB:SetChecked(Memoria_Options.pvpKill)
+    Memoria:OptionsEnableDisable(MemoriaOptions_PvPKillCB)
+
+    MemoriaOptions_PvPKillLogCB:SetChecked(Memoria_Options.pvpKillLog)
+    Memoria:OptionsEnableDisable(MemoriaOptions_PvPKillLogCB)
 end
 
 function Memoria:OptionsInitialize()
@@ -107,6 +138,9 @@ function Memoria:OptionsInitialize()
     MemoriaOptions_Title:SetText(Memoria.ADDONNAME.." v."..Memoria.ADDONVERSION)
     MemoriaOptions_EventsHeadline:SetText(Memoria.L["Take screenshot on"])
     MemoriaOptions_NewAchievementCB_Text:SetText(Memoria.L["new achievement"])
+
+    MemoriaOptions_LevelUpLogCB_Text:SetText(Memoria.L["level up log"])
+
     MemoriaOptions_LevelUpCB_Text:SetText(Memoria.L["level up"])
     MemoriaOptions_LevelUpCB_ShowPlayedCB_Text:SetText(Memoria.L["show played"])
     MemoriaOptions_LevelUpCB_ShowPlayedCB_ResizeChatCB_Text:SetText(Memoria.L["resize chat window"])
@@ -114,11 +148,24 @@ function Memoria:OptionsInitialize()
     MemoriaOptions_ReputationChangeCB_ExaltedOnlyCB_Text:SetText(Memoria.L["exalted only"])
     MemoriaOptions_ArenaEndingCB_Text:SetText(Memoria.L["arena endings"])
     MemoriaOptions_ArenaEndingCB_WinsOnlyCB_Text:SetText(Memoria.L["wins only"])
+
+    MemoriaOptions_BattlegroundEndingLogCB_Text:SetText(Memoria.L["battleground endings log"])
+
     MemoriaOptions_BattlegroundEndingCB_Text:SetText(Memoria.L["battleground endings"])
     MemoriaOptions_BattlegroundEndingCB_WinsOnlyCB_Text:SetText(Memoria.L["wins only"])
+
+    MemoriaOptions_BosskillsLogCB_Text:SetText(Memoria.L["bosskills log"])
+
     MemoriaOptions_BosskillsCB_Text:SetText(Memoria.L["bosskills"])
     MemoriaOptions_BosskillsCB_FirstkillsCB_Text:SetText(Memoria.L["only after first kill"])
     MemoriaOptions_ChallengeDoneCB_Text:SetText(Memoria.L["challenge instance endings"])
+
+    MemoriaOptions_DeathLogCB_Text:SetText(Memoria.L["death log"])
+    MemoriaOptions_DeathCB_Text:SetText(Memoria.L["death"])
+
+
+    MemoriaOptions_PvPKillLogCB_Text:SetText(Memoria.L["pvp kills log"])
+    MemoriaOptions_PvPKillCB_Text:SetText(Memoria.L["pvp kills"])
     -- parse current options
     Memoria:OptionsRestore()
 end
