@@ -84,6 +84,17 @@ Memoria.DefaultOptions = {
     questTurnInLog = true,
 }
 
+Memoria.EntryIDs = {
+    std = 1,
+    fly = 2,
+    ghost = 3,
+    death = 4,
+    lvl = 5,
+    boss = 6,
+    pvpk = 7,
+    bgend = 8,
+    quest = 9,
+}
 
 ----------------------------
 --  Declare EventHandler  --
@@ -193,7 +204,7 @@ function Memoria:ENCOUNTER_END_Handler(...)
     Memoria:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
     if ((not encounterID) or (not difficulty)) then return; end
     if (success == 1) then 
-    	if (Memoria_Options.bosskillsLog) then Memoria:SaveCurrentState(format("%s, %d", "boss", encounterID)); end
+    	if (Memoria_Options.bosskillsLog) then Memoria:SaveCurrentState(format("%s, %d", Memoria.EntryIDs.boss, encounterID)); end
 	if (not Memoria_Options.bosskills) then return; end
         -- check if boss was a known kill, if "only after first kill" is enabled
         if (not Memoria_CharBossKillDB[difficulty]) then Memoria_CharBossKillDB[difficulty] = {}; end
@@ -206,7 +217,7 @@ end
 
 function Memoria:PLAYER_DEAD_Handler(...)
     Memoria:DebugMsg("PLAYER_DEAD_Handler() called...")
-    if (Memoria_Options.deathLog) then Memoria:SaveCurrentState(format("death, %s", Memoria.LastAttack)); end
+    if (Memoria_Options.deathLog) then Memoria:SaveCurrentState(format("%d, %s", Memoria.EntryIDs.death, Memoria.LastAttack)); end
     if (Memoria_Options.death) then Memoria:AddScheduledScreenshot(1); end
 end
 
@@ -215,10 +226,8 @@ function Memoria:COMBAT_LOG_Handler(...)
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
     if not (destName == UnitName("player")) then return; end
     if (subevent == "SPELL_DAMAGE" or subevent == "SPELL_PERIODIC_DAMAGE" or subevent == "RANGE_DAMAGE") then -- and (suffixParam2 > 0 or UnitIsDeadOrGhost("player")) then
-	--Memoria:SaveCurrentState(format("death, %s", sourceName))
 	Memoria.LastAttack = sourceName
     elseif subevent == "SWING_DAMAGE" then --and (prefixParam2 > 0 or UnitIsDeadOrGhost("player")) then
-	-- Memoria:SaveCurrentState(format("death, %s", sourceName))
 	Memoria.LastAttack = sourceName
     elseif subevent == "ENVIRONMENTAL_DAMAGE" then
 	Memoria.LastAttack = prefixParam1
@@ -227,7 +236,7 @@ end
 
 function Memoria:PLAYER_PVP_KILLS_CHANGED_Handler(unitTarget)
     Memoria:DebugMsg("PLAYER_PVP_KILLS_CHANGED_Handler() called...")
-    if (Memoria_Options.pvpKillsLog) then Memoria:SaveCurrentState(format("pvpk, %s", unitTarget)); end
+    if (Memoria_Options.pvpKillsLog) then Memoria:SaveCurrentState(format("%d, %s", Memoria.EntryIDs.pvpk, unitTarget)); end
     if (Memoria_Options.pvpKills) then Memoria:AddScheduledScreenshot(1); end
 end
 
@@ -237,7 +246,7 @@ function Memoria:PLAYER_LEVEL_UP_Handler(level, ...)
     if not Memoria_CharLevelTimes[Memoria.PlayerLevel] then
         Memoria_CharLevelTimes[Memoria.PlayerLevel] = 0
     end
-    if (Memoria_Options.levelUpLog) then Memoria:SaveCurrentState("lvl"); end
+    if (Memoria_Options.levelUpLog) then Memoria:SaveCurrentState(Memoria.EntryIDs.lvl); end
     if (not Memoria_Options.levelUp) then return; end
     if (Memoria_Options.levelUpShowPlayed) then
         Memoria.WaitForTimePlayed = true
@@ -262,7 +271,7 @@ end
 function Memoria:QUEST_TURNED_IN_Handler(...)
     Memoria:DebugMsg("QUEST_TURNED_IN_Handler() called...")
     local id, xp, money = ...
-    Memoria:SaveCurrentState(format("quest, %s", id))
+    Memoria:SaveCurrentState(format("%d, %s", Memoria.EntryIDs.quest, id))
 end
 
 function Memoria:RESS_Handler(...)
@@ -306,7 +315,7 @@ function Memoria:UPDATE_BATTLEFIELD_STATUS_Handler()
 	end
 	-- playerFaction is either "Alliance" or "Horde"
 	if (not Memoria_Options.battlegroundEndingOnlyWins or win) then
-	    if (Memoria_Options.battlegroundEndingLog) then Memoria:SaveCurrentState(format("bg, %s", stateString)); end
+	    if (Memoria_Options.battlegroundEndingLog) then Memoria:SaveCurrentState(format("%d, %s", Memoria.EntryIDs.bgend, stateString)); end
 	    if (Memoria_Options.battlegroundEnding) then
 		Memoria:AddScheduledScreenshot(1)
 		Memoria.BattlefieldScreenshotAlreadyTaken = true
@@ -336,11 +345,11 @@ end
 
 function Memoria:StandardStateSave()
     if UnitIsGhost("player") then
-	Memoria:SaveCurrentState("ghst")
+	Memoria:SaveCurrentState(Memoria.EntryIDs.ghost)
     elseif UnitOnTaxi("player") then
-	Memoria:SaveCurrentState("flght")
+	Memoria:SaveCurrentState(Memoria.EntryIDs.fly)
     else
-	Memoria:SaveCurrentState("std")
+	Memoria:SaveCurrentState(Memoria.EntryIDs.std)
     end
 end
 
