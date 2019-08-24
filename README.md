@@ -26,36 +26,37 @@ The current level of the character. For LevelUp entries this will be the new lev
 ### EntryID
 The type of entry. More entries may be added in the future but none will be removed or changed once they have been documented here. If an entry type becomes invalid due to changes to the addon API that ID will not be used for another entry type. Each entry may have several type-specific fields that are inserted after the entryID.
 
-#### Standard (ID: 1)
+#### Standard (ID: 101)
 Type used for periodic entries if no other type applies. Has no additional fields.
 
-#### Fly (ID: 2)
+#### Fly (ID: 102)
 Inserted at beginning of flight master travel and used for periodic entries while in flight. No additional fields.
 
-#### Ghost (ID: 3)
+#### Ghost (ID: 103)
 Inserted when character becomes ghost (upon pressing Release Spirit) and used for periodic entries while ghost. No additional fields.
 
-#### Death (ID: 4)
+#### Death (ID: 201)
 Inserted immediately upon character death.  
 Additional field: the name of the source of the killing damage. This can be one of the environmental categories, a mob name or a player name.
 
-#### Level (ID 5)
+#### Level (ID 301)
 Inserted when the character levels up. Has no additional fields.
 
-#### Boss (ID 6)
+#### Quest Turn-in (ID 311)
+Inserted when a quest is turned in.  
+Additional field: numeric Quest ID. 
+
+#### Boss (ID 401)
 Inserted on the end of a successful instanced encounter. This should only be dungeon and raid bosses but there may be exceptions I'm not aware of.  
 Additional field: numeric id for the encounter.
 
-#### PvP Kill (ID 7)
+#### PvP Kill (ID 501)
 Inserted on honorable PvP kills.  
 Additional field: name of the killed enemy player.
 
-#### Battleground end (ID 8)
+#### Battleground end (ID 511)
 Inserted at end of battlegrounds.  
 Additional field: string equal to "won" or "lost" depending on outcome.
 
-#### Quest Turn-in (ID 9)
-Inserted when a quest is turned in.  
-Additional field: numeric Quest ID. 
 
 

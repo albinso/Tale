@@ -85,15 +85,15 @@ Memoria.DefaultOptions = {
 }
 
 Memoria.EntryIDs = {
-    std = 1,
-    fly = 2,
-    ghost = 3,
-    death = 4,
-    lvl = 5,
-    boss = 6,
-    pvpk = 7,
-    bgend = 8,
-    quest = 9,
+    std = 101,
+    fly = 102,
+    ghost = 103,
+    death = 201,
+    lvl = 301,
+    boss = 401,
+    pvpk = 501,
+    bgend = 511,
+    quest = 311,
 }
 
 ----------------------------
