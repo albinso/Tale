@@ -176,9 +176,14 @@
           </CheckButton>
         </Frames>
       </CheckButton>
+      <CheckButton name="$parent_KillsLogCB" inherits="MemoriaCBTemplate">
+	<Anchors>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB_FirstkillsCB" x="-20" y="-5"/>
+	</Anchors>
+      </CheckButton>
       <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB_FirstkillsCB" x="-20" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_KillsLogCB" x="0" y="-5"/>
         </Anchors>
       </CheckButton>
     </Frames>

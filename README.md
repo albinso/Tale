@@ -24,7 +24,7 @@ Current real world time measured as the number of seconds passed since the epoch
 The current level of the character. For LevelUp entries this will be the new level of the character.
 
 ### EntryID
-The type of entry. More entries may be added in the future but none will be removed or changed once they have been documented here. If an entry type becomes invalid due to changes to the addon API that ID will not be used for another entry type. Each entry may have several type-specific fields that are inserted after the entryID.
+The type of entry. More entries may be added in the future but none will be removed or changed once they have been documented here. If an entry type becomes invalid due to changes to the addon API that ID will not be used for another entry type. Each entry may have several type-specific fields that are inserted after the entryID. In some cases more than one event is triggered by the same action. In those cases both events will be written to the log.
 
 #### Standard (ID: 101)
 Type used for periodic entries if no other type applies. Has no additional fields.
@@ -46,12 +46,17 @@ Inserted when the character levels up. Has no additional fields.
 Inserted when a quest is turned in.  
 Additional field: numeric Quest ID. 
 
-#### Boss (ID 401)
-Inserted on the end of a successful instanced encounter. This should only be dungeon and raid bosses but there may be exceptions I'm not aware of.  
+#### Kill (ID 401)
+Inserted whenever a unit the player has damaged dies.  
+Additional field: name of the killed unit.
+
+#### Boss (ID 411)
+Inserted on the end of a successful instanced encounter. This should only be dungeon and raid bosses but there may be exceptions I'm not aware of. Overlaps with 401.
 Additional field: numeric id for the encounter.
 
+
 #### PvP Kill (ID 501)
-Inserted on honorable PvP kills.  
+Inserted on honorable PvP kills. Often, but not always, overlaps with 401.
 Additional field: name of the killed enemy player.
 
 #### Battleground end (ID 511)

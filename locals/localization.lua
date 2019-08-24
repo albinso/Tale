@@ -25,6 +25,7 @@ Memoria.L = {
     ["death"] = "death",
     ["exalted only"] = "exalted only",
     ["hours"] = "hours",
+    ["kills log"] = "log all kills",
     ["level up log"] = "level up log",
     ["level up"] = "level up",
     ["minutes"] = "minutes",

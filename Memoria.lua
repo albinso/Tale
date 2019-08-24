@@ -82,6 +82,7 @@ Memoria.DefaultOptions = {
     levelUpLog = true,
     bosskillsLog = true,
     questTurnInLog = true,
+    killsLog = true,
 }
 
 Memoria.EntryIDs = {
@@ -90,10 +91,11 @@ Memoria.EntryIDs = {
     ghost = 103,
     death = 201,
     lvl = 301,
-    boss = 401,
+    boss = 411,
     pvpk = 501,
     bgend = 511,
     quest = 311,
+    kill = 401,
 }
 
 ----------------------------
@@ -221,16 +223,31 @@ function Memoria:PLAYER_DEAD_Handler(...)
     if (Memoria_Options.death) then Memoria:AddScheduledScreenshot(1); end
 end
 
+function Memoria:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName)
+    if (sourceName == UnitName("player") and subevent:match('_DAMAGE$')) then
+	if (Memoria.mobHitCache[destGUID] == nil) then Memoria.mobHitCache[destGUID] = 1; end
+    end
+    if (subevent == "UNIT_DIED" and Memoria.mobHitCache[destGUID] and Memoria.mobHitCache[destGUID] == 1) then
+	Memoria:SaveCurrentState(format("%d, %s", Memoria.EntryIDs.kill, destName))
+    end
+end
 
-function Memoria:COMBAT_LOG_Handler(...)
-    local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
-    if not (destName == UnitName("player")) then return; end
+function Memoria:PLAYER_TAKES_DAMAGE_Check(subevent, sourceName, prefixParam1)
     if (subevent == "SPELL_DAMAGE" or subevent == "SPELL_PERIODIC_DAMAGE" or subevent == "RANGE_DAMAGE") then -- and (suffixParam2 > 0 or UnitIsDeadOrGhost("player")) then
 	Memoria.LastAttack = sourceName
     elseif subevent == "SWING_DAMAGE" then --and (prefixParam2 > 0 or UnitIsDeadOrGhost("player")) then
 	Memoria.LastAttack = sourceName
     elseif subevent == "ENVIRONMENTAL_DAMAGE" then
 	Memoria.LastAttack = prefixParam1
+    end
+end
+
+function Memoria:COMBAT_LOG_Handler(...)
+    local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
+    if not (destName == UnitName("player")) then 
+	if (Memoria_Options.killsLog) then Memoria:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName); end
+    else
+	if (Memoria_Options.deathLog) then Memoria:PLAYER_TAKES_DAMAGE_Check(subevent, sourceName, prefixParam1); end
     end
 end
 
@@ -388,6 +405,7 @@ function Memoria:Initialize(frame)
         Memoria_CharLevelTimes[Memoria.PlayerLevel] = 0
     end
     Memoria.queue = {}
+    Memoria.mobHitCache = {}
     Memoria.state = STATE_IDLE
     Memoria:OptionsInitialize()
 end
@@ -407,7 +425,7 @@ function Memoria:RegisterEvents(frame)
     if (Memoria_Options.levelUp or Memoria_Options.levelUpLog) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Memoria_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
     if (Memoria_Options.arenaEnding or Memoria_Options.battlegroundEnding or Memoria_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
-    if (Memoria_Options.deathLog) then 
+    if (Memoria_Options.deathLog or Memoria_Options.killsLog) then 
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
     end
     frame:RegisterEvent("PLAYER_ALIVE")
