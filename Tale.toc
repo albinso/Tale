@@ -1,7 +1,7 @@
 ## Interface: 80200
 ## Title: Tale
-## Version: 8.2
-## Notes: Tale automatically screenshots various milestones of your characters.
+## Version: 1.0
+## Notes: Tale automatically screenshots and logs various milestones of your characters.
 ## Author: Albin Johansson
 ## LoadOnDemand: 0
 ## DefaultState: enabled
