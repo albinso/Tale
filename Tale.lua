@@ -70,8 +70,8 @@ Tale.DefaultOptions = {
     resizeChat = false,
     version = 1,
     logInterval = 10,
-    pvpKill = false,
-    pvpKillLog = true,
+    pvpKills = false,
+    pvpKillsLog = true,
     death = false,
     deathLog = true,
     battlegroundEndingLog = true,
@@ -391,7 +391,7 @@ function Tale:RegisterEvents(frame)
     if (Tale_Options.death or Tale_Options.deathLog) then frame:RegisterEvent("PLAYER_DEAD"); end
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
-    if (Tale_Options.pvpKill or Tale_Options.pvpKillLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
+    if (Tale_Options.pvpKills or Tale_Options.pvpKillsLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
     if (Tale_Options.questTurnInLog) then frame:RegisterEvent("QUEST_TURNED_IN"); end
 
 end

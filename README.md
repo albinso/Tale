@@ -55,8 +55,8 @@ Inserted on the end of a successful instanced encounter. This should only be dun
 Additional field: numeric id for the encounter.
 
 
-#### PvP Kill (ID 501)
-Inserted on honorable PvP kills. Often, but not always, overlaps with 401.
+#### PvP Kill (ID 501) 
+Inserted on honorable PvP kills. May overlap with 401.
 Additional field: name of the killed enemy player.
 
 #### Battleground end (ID 511)
