@@ -1,0 +1,16 @@
+## Interface: 80200
+## Title: Tale
+## Version: 8.2
+## Notes: Tale automatically screenshots various milestones of your characters.
+## Author: Mîzukichan@EU-Antonidas
+## LoadOnDemand: 0
+## DefaultState: enabled
+## SavedVariables: Tale_Options
+## SavedVariablesPerCharacter: Tale_CharBossKillDB, Tale_CharLevelTimes, Tale_LogData
+## X-Website: http://cosmocanyon.de
+
+embeds.xml
+locals.xml
+Options.xml
+Options.lua
+Tale.lua

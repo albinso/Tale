@@ -1,5 +1,5 @@
 -- ********************************************************
--- **              Memoria - enGB/enUS Local             **
+-- **              Tale - enGB/enUS Local             **
 -- **             <http://www.cosmocanyon.de>            **
 -- ********************************************************
 --
@@ -8,11 +8,11 @@
 --
 
 -- Check for addon table
-if (not Memoria) then Memoria = {}; end
-local Memoria = Memoria;
+if (not Tale) then Tale = {}; end
+local Tale = Tale;
 
 -- Localization
-Memoria.L = {
+Tale.L = {
     ["Take screenshot on"] = "Take screenshot on",
     ["arena endings"] = "arena endings",
     ["battleground endings log"] = "battleground endings log",

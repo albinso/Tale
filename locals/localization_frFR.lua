@@ -1,5 +1,5 @@
 -- ********************************************************
--- **               Memoria - frFR Local                 **
+-- **               Tale - frFR Local                 **
 -- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
@@ -8,36 +8,36 @@
 --
 
 -- Check for addon table
-if (not Memoria) then Memoria = {}; end
+if (not Tale) then Tale = {}; end
 if GetLocale() ~= "frFR" then return end
 
 -- Localization
-Memoria.L["arena endings"] = "fin d'un match d'arène"
-Memoria.L["battleground endings"] = "fin d'un champs de bataille"
+Tale.L["arena endings"] = "fin d'un match d'arène"
+Tale.L["battleground endings"] = "fin d'un champs de bataille"
 --[[Translation missing --]]
---[[ Memoria.L["bosskills"] = "boss kills"--]] 
+--[[ Tale.L["bosskills"] = "boss kills"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["challenge instance endings"] = "mythic+ instance endings"--]] 
+--[[ Tale.L["challenge instance endings"] = "mythic+ instance endings"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["days"] = "days"--]] 
-Memoria.L["exalted only"] = "exalté seulement"
+--[[ Tale.L["days"] = "days"--]] 
+Tale.L["exalted only"] = "exalté seulement"
 --[[Translation missing --]]
---[[ Memoria.L["hours"] = "hours"--]] 
-Memoria.L["level up"] = "up d'un niveau"
+--[[ Tale.L["hours"] = "hours"--]] 
+Tale.L["level up"] = "up d'un niveau"
 --[[Translation missing --]]
---[[ Memoria.L["minutes"] = "minutes"--]] 
-Memoria.L["new achievement"] = "nouveau haut fait"
-Memoria.L["new reputation level"] = "nouveau niveau de réputation"
+--[[ Tale.L["minutes"] = "minutes"--]] 
+Tale.L["new achievement"] = "nouveau haut fait"
+Tale.L["new reputation level"] = "nouveau niveau de réputation"
 --[[Translation missing --]]
---[[ Memoria.L["only after first kill"] = "only once per difficulty"--]] 
+--[[ Tale.L["only after first kill"] = "only once per difficulty"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["resize chat window"] = "Resize chat window for played message"--]] 
+--[[ Tale.L["resize chat window"] = "Resize chat window for played message"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["seconds"] = "seconds"--]] 
+--[[ Tale.L["seconds"] = "seconds"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["show played"] = "show /played in chat"--]] 
-Memoria.L["Take screenshot on"] = "Faire une capture d'écran quand"
+--[[ Tale.L["show played"] = "show /played in chat"--]] 
+Tale.L["Take screenshot on"] = "Faire une capture d'écran quand"
 --[[Translation missing --]]
---[[ Memoria.L["time played"] = "Time played at level"--]] 
-Memoria.L["wins only"] = "victoires seulement"
+--[[ Tale.L["time played"] = "Time played at level"--]] 
+Tale.L["wins only"] = "victoires seulement"
 

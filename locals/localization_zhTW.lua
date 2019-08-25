@@ -1,5 +1,5 @@
 -- ********************************************************
--- **               Memoria - zhTW Local                 **
+-- **               Tale - zhTW Local                 **
 -- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
@@ -8,44 +8,44 @@
 --
 
 -- Check for addon table
-if (not Memoria) then Memoria = {}; end
+if (not Tale) then Tale = {}; end
 if GetLocale() ~= "zhTW" then return end
 
 -- Localization
 --[[Translation missing --]]
---[[ Memoria.L["arena endings"] = "arena endings"--]] 
+--[[ Tale.L["arena endings"] = "arena endings"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["battleground endings"] = "battleground endings"--]] 
+--[[ Tale.L["battleground endings"] = "battleground endings"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["bosskills"] = "boss kills"--]] 
+--[[ Tale.L["bosskills"] = "boss kills"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["challenge instance endings"] = "mythic+ instance endings"--]] 
+--[[ Tale.L["challenge instance endings"] = "mythic+ instance endings"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["days"] = "days"--]] 
+--[[ Tale.L["days"] = "days"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["exalted only"] = "exalted only"--]] 
+--[[ Tale.L["exalted only"] = "exalted only"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["hours"] = "hours"--]] 
+--[[ Tale.L["hours"] = "hours"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["level up"] = "level up"--]] 
+--[[ Tale.L["level up"] = "level up"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["minutes"] = "minutes"--]] 
+--[[ Tale.L["minutes"] = "minutes"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["new achievement"] = "new achievement"--]] 
+--[[ Tale.L["new achievement"] = "new achievement"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["new reputation level"] = "new reputation level"--]] 
+--[[ Tale.L["new reputation level"] = "new reputation level"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["only after first kill"] = "only once per difficulty"--]] 
+--[[ Tale.L["only after first kill"] = "only once per difficulty"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["resize chat window"] = "Resize chat window for played message"--]] 
+--[[ Tale.L["resize chat window"] = "Resize chat window for played message"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["seconds"] = "seconds"--]] 
+--[[ Tale.L["seconds"] = "seconds"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["show played"] = "show /played in chat"--]] 
+--[[ Tale.L["show played"] = "show /played in chat"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["Take screenshot on"] = "Take screenshot on"--]] 
+--[[ Tale.L["Take screenshot on"] = "Take screenshot on"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["time played"] = "Time played at level"--]] 
+--[[ Tale.L["time played"] = "Time played at level"--]] 
 --[[Translation missing --]]
---[[ Memoria.L["wins only"] = "wins only"--]] 
+--[[ Tale.L["wins only"] = "wins only"--]] 
 
