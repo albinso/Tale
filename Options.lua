@@ -129,8 +129,8 @@ end
 
 function Tale:OptionsInitialize()
     -- parse localization
-    --TaleOptions_Options_Title:SetText(Tale.ADDONNAME.." v."..Tale.ADDONVERSION)
-    --TaleOptions_Options_EventsHeadline:SetText(Tale.L["Take screenshot on"])
+    TaleOptions_Options_Title:SetText(Tale.ADDONNAME.." v."..Tale.ADDONVERSION)
+    TaleOptions_Options_EventsHeadline:SetText(Tale.L["Take screenshot on"])
 
     TaleOptions_Options_LevelUpLogCB_Text:SetText(Tale.L["level up log"])
 

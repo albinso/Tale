@@ -13,8 +13,8 @@ local Tale = Tale;
 
 -- Localization
 Tale.L = {
-    ["Take screenshot on"] = "Take screenshot on",
-    ["log interval"] = "Take screenshot every %d seconds",
+    ["Take screenshot on"] = "Configure Log and Screenshot settings",
+    ["log interval"] = "Log current status every %d seconds",
     ["battleground endings log"] = "Log battleground endings",
     ["battleground endings"] = "Screenshot battleground endings",
     ["bosskills log"] = "Log boss kills",
