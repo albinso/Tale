@@ -51,12 +51,12 @@ Inserted whenever a unit the player has damaged dies.
 Additional field: name of the killed unit.
 
 #### Boss (ID 411)
-Inserted on the end of a successful instanced encounter. This should only be dungeon and raid bosses but there may be exceptions I'm not aware of. Overlaps with 401.
+Inserted on the end of a successful instanced encounter. This should only be dungeon and raid bosses but there may be exceptions I'm not aware of. Overlaps with 401.  
 Additional field: numeric id for the encounter.
 
 
 #### PvP Kill (ID 501) 
-Inserted on honorable PvP kills. May overlap with 401.
+Inserted on honorable PvP kills. May overlap with 401.  
 Additional field: name of the killed enemy player.
 
 #### Battleground end (ID 511)
