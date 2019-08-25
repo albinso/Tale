@@ -59,9 +59,6 @@ local STATE_RESTORE_DELAY  = 4
 --  Default Options  --
 -----------------------
 Tale.DefaultOptions = {
-    achievements = true,
-    arenaEnding = false,
-    arenaEndingOnlyWins = false,
     battlegroundEnding = false,
     battlegroundEndingOnlyWins = false,
     bosskills = true,
@@ -71,7 +68,6 @@ Tale.DefaultOptions = {
     levelUp = true,
     levelUpShowPlayed = false,
     resizeChat = false,
-    challengeDone = false,
     version = 1,
     logInterval = 10,
     pvpKill = false,
@@ -108,11 +104,7 @@ function Tale:EventHandler(frame, event, ...)
             Tale:ADDON_LOADED_Handler(frame)
         end
     
-    elseif (event == "ACHIEVEMENT_EARNED") then
-        Tale:ACHIEVEMENT_EARNED_Handler()
         
-    elseif (event == "CHALLENGE_MODE_COMPLETED") then
-        Tale:CHALLENGE_MODE_COMPLETED_Handler()
     
     elseif (event == "CHAT_MSG_SYSTEM") then
         Tale:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
@@ -161,20 +153,6 @@ function Tale:ADDON_LOADED_Handler(frame)
     Tale:Initialize(frame)
     Tale:RegisterEvents(frame)
     TaleFrame:SetScript("OnUpdate", Tale.OnUpdate)
-end
-
-function Tale:ACHIEVEMENT_EARNED_Handler()
-    Tale:DebugMsg("ACHIEVEMENT_EARNED_Handler() called...")
-    if (not Tale_Options.achievements) then return; end
-    Tale:AddScheduledScreenshot(1)
-    Tale:DebugMsg("Achievement - Added screenshot to queue")
-end
-
-function Tale:CHALLENGE_MODE_COMPLETED_Handler()
-    Tale:DebugMsg("CHALLENGE_MODE_COMPLETED_Handler() called...")
-    if (not Tale_Options.challengeDone) then return; end
-    Tale:AddScheduledScreenshot(5)
-    Tale:DebugMsg("Challenge mode completed - Added screenshot to queue")
 end
 
 function Tale:CHAT_MSG_SYSTEM_Handler(...)
@@ -299,7 +277,7 @@ end
 function Tale:UPDATE_BATTLEFIELD_STATUS_Handler()
     Tale:DebugMsg("UPDATE_BATTLEFIELD_STATUS_Handler() called...")
     -- if not activated, return
-    if (not Tale_Options.battlegroundEnding and not Tale_Options.battlegroundEndingLog and not Tale_Options.arenaEnding) then return; end
+    if (not Tale_Options.battlegroundEnding and not Tale_Options.battlegroundEndingLog) then return; end
     -- if not ended, return
     local winner = GetBattlefieldWinner()                                                                             -- possible values: nil (no winner yet), 0 (Horde / green Team), 1 (Alliance / gold Team)
     if (winner == nil) then 
@@ -308,37 +286,21 @@ function Tale:UPDATE_BATTLEFIELD_STATUS_Handler()
     end
     -- if screenshot of this battlefield already taken, then return
     if (Tale.BattlefieldScreenshotAlreadyTaken) then return; end
-    -- if we are here, we have a freshly finished arena or battleground
-    if (Tale.IsRetail and IsActiveBattlefieldArena()) then
-        if (not Tale_Options.arenaEnding) then return; end
-        if (not Tale_Options.arenaEndingOnlyWins) then
-            Tale:AddScheduledScreenshot(1)
-            Tale.BattlefieldScreenshotAlreadyTaken = true
-            Tale:DebugMsg("Arena ended - Added screenshot to queue")
-        else
-            local playerTeam = Tale:GetPlayerTeam()
-            if (winner == playerTeam) then
-                Tale:AddScheduledScreenshot(1)
-                Tale.BattlefieldScreenshotAlreadyTaken = true
-                Tale:DebugMsg("Arena won - Added screenshot to queue")
-            end
-        end
-    else
-	local playerFaction = UnitFactionGroup("player")
-	local win = (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) 
-	local stateString = "lost"	
-	if (win) then
-	    stateString = "won"
+    -- if we are here, we have a freshly finished battleground
+    local playerFaction = UnitFactionGroup("player")
+    local win = (playerFaction == "Alliance" and winner == 1) or (playerFaction == "Horde" and winner == 0) 
+    local stateString = "lost"	
+    if (win) then
+	stateString = "won"
+    end
+    -- playerFaction is either "Alliance" or "Horde"
+    if (not Tale_Options.battlegroundEndingOnlyWins or win) then
+	if (Tale_Options.battlegroundEndingLog) then Tale:SaveCurrentState(format("%d, %s", Tale.EntryIDs.bgend, stateString)); end
+	if (Tale_Options.battlegroundEnding) then
+	    Tale:AddScheduledScreenshot(1)
+	    Tale.BattlefieldScreenshotAlreadyTaken = true
+	    Tale:DebugMsg("Battleground won - Added screenshot to queue")
 	end
-	-- playerFaction is either "Alliance" or "Horde"
-	if (not Tale_Options.battlegroundEndingOnlyWins or win) then
-	    if (Tale_Options.battlegroundEndingLog) then Tale:SaveCurrentState(format("%d, %s", Tale.EntryIDs.bgend, stateString)); end
-	    if (Tale_Options.battlegroundEnding) then
-		Tale:AddScheduledScreenshot(1)
-		Tale.BattlefieldScreenshotAlreadyTaken = true
-		Tale:DebugMsg("Battleground won - Added screenshot to queue")
-	    end
-        end
     end
 end
 
@@ -416,15 +378,11 @@ end
 -------------------------------------------------
 function Tale:RegisterEvents(frame)
     frame:UnregisterAllEvents()
-    if Tale.IsRetail then
-        if (Tale_Options.achievements) then frame:RegisterEvent("ACHIEVEMENT_EARNED"); end
-        if (Tale_Options.challengeDone) then frame:RegisterEvent("CHALLENGE_MODE_COMPLETED"); end
-    end
     if (Tale_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
     if (Tale_Options.bosskills or Tale_Options.bosskillsLog) then frame:RegisterEvent("ENCOUNTER_END"); end
     if (Tale_Options.levelUp or Tale_Options.levelUpLog) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Tale_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
-    if (Tale_Options.arenaEnding or Tale_Options.battlegroundEnding or Tale_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
+    if (Tale_Options.battlegroundEnding or Tale_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
     if (Tale_Options.deathLog or Tale_Options.killsLog) then 
 	frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
     end

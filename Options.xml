@@ -65,15 +65,9 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EventsHeadline" x="0" y="-5"/>
         </Anchors>
       </Slider>
-      <CheckButton name="$parent_NewAchievementCB" inherits="TaleCBTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogIntervalSlider" x="0" y="-5"/>
-        </Anchors>
-      </CheckButton>
-
       <CheckButton name="$parent_DeathLogCB" inherits="TaleCBTemplate">
 	<Anchors>
-	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NewAchievementCB" x="0" y="-5"/>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogIntervalSlider" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
       <CheckButton name="$parent_DeathCB" inherits="TaleCBTemplate">
@@ -115,21 +109,9 @@
           </CheckButton>
         </Frames>
       </CheckButton>
-      <CheckButton name="$parent_ArenaEndingCB" inherits="TaleCBTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeCB_ExaltedOnlyCB" x="-20" y="-5"/>
-        </Anchors>
-        <Frames>
-          <CheckButton name="$parent_WinsOnlyCB" inherits="TaleCBTemplate">
-            <Anchors>
-              <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
-            </Anchors>
-          </CheckButton>
-        </Frames>
-      </CheckButton>
       <CheckButton name="$parent_BattlegroundEndingLogCB" inherits="TaleCBTemplate">
 	<Anchors>
-	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB_WinsOnlyCB" x="-20" y="-5"/>
+	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeCB_ExaltedOnlyCB" x="-20" y="-5"/>
 	</Anchors>
       </CheckButton>
       <CheckButton name="$parent_BattlegroundEndingCB" inherits="TaleCBTemplate">
@@ -180,11 +162,6 @@
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB_FirstkillsCB" x="-20" y="-5"/>
 	</Anchors>
-      </CheckButton>
-      <CheckButton name="$parent_ChallengeDoneCB" inherits="TaleCBTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_KillsLogCB" x="0" y="-5"/>
-        </Anchors>
       </CheckButton>
     </Frames>
   </Frame>

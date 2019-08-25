@@ -58,19 +58,15 @@ end
 
 function Tale:OptionsSave()
 
-    Tale_Options.achievements = TaleOptions_NewAchievementCB:GetChecked()
     Tale_Options.levelUp = TaleOptions_LevelUpCB:GetChecked()
     Tale_Options.levelUpShowPlayed = TaleOptions_LevelUpCB_ShowPlayedCB:GetChecked()
     Tale_Options.resizeChat = TaleOptions_LevelUpCB_ShowPlayedCB_ResizeChatCB:GetChecked()
     Tale_Options.reputationChange = TaleOptions_ReputationChangeCB:GetChecked()
     Tale_Options.reputationChangeOnlyExalted = TaleOptions_ReputationChangeCB_ExaltedOnlyCB:GetChecked()
-    Tale_Options.arenaEnding = TaleOptions_ArenaEndingCB:GetChecked()
-    Tale_Options.arenaEndingOnlyWins = TaleOptions_ArenaEndingCB_WinsOnlyCB:GetChecked()
     Tale_Options.battlegroundEnding = TaleOptions_BattlegroundEndingCB:GetChecked()
     Tale_Options.battlegroundEndingOnlyWins = TaleOptions_BattlegroundEndingCB_WinsOnlyCB:GetChecked()
     Tale_Options.bosskills = TaleOptions_BosskillsCB:GetChecked()
     Tale_Options.bosskillsFirstkill = TaleOptions_BosskillsCB_FirstkillsCB:GetChecked()
-    Tale_Options.challengeDone = TaleOptions_ChallengeDoneCB:GetChecked()
     Tale_Options.levelUpLog = TaleOptions_LevelUpLogCB:GetChecked()
     Tale_Options.bosskillsLog = TaleOptions_BosskillsLogCB:GetChecked()
     Tale_Options.deathLog = TaleOptions_DeathLogCB:GetChecked()
@@ -86,14 +82,6 @@ function Tale:OptionsSave()
 end
 
 function Tale:OptionsRestore()
-    local IsRetail = tonumber(string.sub(GetBuildInfo(), 1, 1)) > 1
-    if (not IsRetail) then
-        TaleOptions_NewAchievementCB:Disable()
-        TaleOptions_ArenaEndingCB:Disable()
-        TaleOptions_ChallengeDoneCB:Disable()
-    end
-    TaleOptions_NewAchievementCB:SetChecked(Tale_Options.achievements)
-    Tale:OptionsEnableDisable(TaleOptions_NewAchievementCB)
     TaleOptions_LevelUpCB:SetChecked(Tale_Options.levelUp)
     TaleOptions_LevelUpCB_ShowPlayedCB:SetChecked(Tale_Options.levelUpShowPlayed)
     TaleOptions_LevelUpCB_ShowPlayedCB_ResizeChatCB:SetChecked(Tale_Options.resizeChat)
@@ -101,17 +89,12 @@ function Tale:OptionsRestore()
     TaleOptions_ReputationChangeCB:SetChecked(Tale_Options.reputationChange)
     TaleOptions_ReputationChangeCB_ExaltedOnlyCB:SetChecked(Tale_Options.reputationChangeOnlyExalted)
     Tale:OptionsEnableDisable(TaleOptions_ReputationChangeCB)
-    TaleOptions_ArenaEndingCB:SetChecked(Tale_Options.arenaEnding)
-    TaleOptions_ArenaEndingCB_WinsOnlyCB:SetChecked(Tale_Options.arenaEndingOnlyWins)
-    Tale:OptionsEnableDisable(TaleOptions_ArenaEndingCB)
     TaleOptions_BattlegroundEndingCB:SetChecked(Tale_Options.battlegroundEnding)
     TaleOptions_BattlegroundEndingCB_WinsOnlyCB:SetChecked(Tale_Options.battlegroundEndingOnlyWins)
     Tale:OptionsEnableDisable(TaleOptions_BattlegroundEndingCB)
     TaleOptions_BosskillsCB:SetChecked(Tale_Options.bosskills)
     TaleOptions_BosskillsCB_FirstkillsCB:SetChecked(Tale_Options.bosskillsFirstkill)
     Tale:OptionsEnableDisable(TaleOptions_BosskillsCB)
-    TaleOptions_ChallengeDoneCB:SetChecked(Tale_Options.challengeDone)
-    Tale:OptionsEnableDisable(TaleOptions_ChallengeDoneCB)
     
     TaleOptions_LevelUpLogCB:SetChecked(Tale_Options.levelUpLog)
     Tale:OptionsEnableDisable(TaleOptions_LevelUpLogCB)
@@ -148,7 +131,6 @@ function Tale:OptionsInitialize()
     -- parse localization
     TaleOptions_Title:SetText(Tale.ADDONNAME.." v."..Tale.ADDONVERSION)
     TaleOptions_EventsHeadline:SetText(Tale.L["Take screenshot on"])
-    TaleOptions_NewAchievementCB_Text:SetText(Tale.L["new achievement"])
 
     TaleOptions_LevelUpLogCB_Text:SetText(Tale.L["level up log"])
 
@@ -157,8 +139,6 @@ function Tale:OptionsInitialize()
     TaleOptions_LevelUpCB_ShowPlayedCB_ResizeChatCB_Text:SetText(Tale.L["resize chat window"])
     TaleOptions_ReputationChangeCB_Text:SetText(Tale.L["new reputation level"])
     TaleOptions_ReputationChangeCB_ExaltedOnlyCB_Text:SetText(Tale.L["exalted only"])
-    TaleOptions_ArenaEndingCB_Text:SetText(Tale.L["arena endings"])
-    TaleOptions_ArenaEndingCB_WinsOnlyCB_Text:SetText(Tale.L["wins only"])
 
     TaleOptions_BattlegroundEndingLogCB_Text:SetText(Tale.L["battleground endings log"])
 
@@ -169,7 +149,6 @@ function Tale:OptionsInitialize()
 
     TaleOptions_BosskillsCB_Text:SetText(Tale.L["bosskills"])
     TaleOptions_BosskillsCB_FirstkillsCB_Text:SetText(Tale.L["only after first kill"])
-    TaleOptions_ChallengeDoneCB_Text:SetText(Tale.L["challenge instance endings"])
 
     TaleOptions_DeathLogCB_Text:SetText(Tale.L["death log"])
     TaleOptions_DeathCB_Text:SetText(Tale.L["death"])
@@ -191,8 +170,9 @@ end
 ----------------------
 --  Register panel  --
 ----------------------
-Tale.OptionPanel = CreateFrame("Frame", "TaleOptions", UIParent, "TaleOptionsTemplate")
-Tale.OptionPanel.name = "Tale"
-Tale.OptionPanel.okay = function() Tale:OptionsSave() end
-Tale.OptionPanel.cancel = function() Tale:OptionsRestore() end
-InterfaceOptions_AddCategory(Tale.OptionPanel)
+-- Tale.Scroll = CreateFrame('ScrollFrame', 'OptionScroll', UIParent, 'UIPanelScrollFrameTemplate')
+Tale.Scroll = CreateFrame("Frame", "TaleOptions", UIParent, "TaleOptionsTemplate")
+Tale.Scroll.name = "Tale"
+Tale.Scroll.okay = function() Tale:OptionsSave() end
+Tale.Scroll.cancel = function() Tale:OptionsRestore() end
+InterfaceOptions_AddCategory(Tale.Scroll)
