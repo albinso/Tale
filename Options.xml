@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
  http://wowprogramming.com/FrameXML/UI.xsd">
-  <Slider name="MemoriaSliderTemplate" orientation="HORIZONTAL" enableMouse="true" virtual="true">
+  <Slider name="TaleSliderTemplate" orientation="HORIZONTAL" enableMouse="true" virtual="true">
     <Size x="144" y="17"/>
     <HitRectInsets left="0" right="0" top="-10" bottom="-10"/>
     <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background"
@@ -22,7 +22,7 @@
   </Layer>
 </Layers>
   </Slider>
-  <CheckButton name="MemoriaCBTemplate" virtual="true" inherits="OptionsCheckButtonTemplate">
+  <CheckButton name="TaleCBTemplate" virtual="true" inherits="OptionsCheckButtonTemplate">
     <Layers>
       <Layer level="OVERLAY">
         <FontString name="$parent_Text" inherits="GameFontWhite" text="Text (L)">
@@ -40,11 +40,11 @@
             else
                 PlaySound(857)
             end
-            Memoria:OptionsEnableDisable(self)
+            Tale:OptionsEnableDisable(self)
         </OnClick>
     </Scripts>
   </CheckButton>
-  <Frame name="MemoriaOptionsTemplate" virtual="true">
+  <Frame name="TaleOptionsTemplate" virtual="true">
     <Layers>
       <Layer level="OVERLAY">
         <FontString name="$parent_Title" inherits="GameFontNormalLarge" text="Title (L)">
@@ -60,128 +60,128 @@
       </Layer>
     </Layers>
     <Frames>
-      <Slider name="$parent_LogIntervalSlider" inherits="MemoriaSliderTemplate" minValue="1" maxValue="120" valueStep="1">
+      <Slider name="$parent_LogIntervalSlider" inherits="TaleSliderTemplate" minValue="1" maxValue="120" valueStep="1">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EventsHeadline" x="0" y="-5"/>
         </Anchors>
       </Slider>
-      <CheckButton name="$parent_NewAchievementCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_NewAchievementCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogIntervalSlider" x="0" y="-5"/>
         </Anchors>
       </CheckButton>
 
-      <CheckButton name="$parent_DeathLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_DeathLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NewAchievementCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_DeathCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_DeathCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_DeathLogCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_LevelUpLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_LevelUpLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_DeathCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_LevelUpCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_LevelUpCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LevelUpLogCB" x="0" y="-5"/>
         </Anchors>
         <Frames>
-          <CheckButton name="$parent_ShowPlayedCB" inherits="MemoriaCBTemplate">
+          <CheckButton name="$parent_ShowPlayedCB" inherits="TaleCBTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
-          <CheckButton name="$parent_ResizeChatCB" inherits="MemoriaCBTemplate" parent="MemoriaOptions_LevelUpCB_ShowPlayedCB">
+          <CheckButton name="$parent_ResizeChatCB" inherits="TaleCBTemplate" parent="TaleOptions_LevelUpCB_ShowPlayedCB">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
         </Frames>
       </CheckButton>
-      <CheckButton name="$parent_ReputationChangeCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_ReputationChangeCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LevelUpCB_ShowPlayedCB_ResizeChatCB" x="-40" y="-5"/>
         </Anchors>
         <Frames>
-          <CheckButton name="$parent_ExaltedOnlyCB" inherits="MemoriaCBTemplate">
+          <CheckButton name="$parent_ExaltedOnlyCB" inherits="TaleCBTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
         </Frames>
       </CheckButton>
-      <CheckButton name="$parent_ArenaEndingCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_ArenaEndingCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ReputationChangeCB_ExaltedOnlyCB" x="-20" y="-5"/>
         </Anchors>
         <Frames>
-          <CheckButton name="$parent_WinsOnlyCB" inherits="MemoriaCBTemplate">
+          <CheckButton name="$parent_WinsOnlyCB" inherits="TaleCBTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
         </Frames>
       </CheckButton>
-      <CheckButton name="$parent_BattlegroundEndingLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_BattlegroundEndingLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ArenaEndingCB_WinsOnlyCB" x="-20" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_BattlegroundEndingCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_BattlegroundEndingCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingLogCB" x="0" y="-5"/>
         </Anchors>
         <Frames>
-          <CheckButton name="$parent_WinsOnlyCB" inherits="MemoriaCBTemplate">
+          <CheckButton name="$parent_WinsOnlyCB" inherits="TaleCBTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
         </Frames>
       </CheckButton>
-      <CheckButton name="$parent_PvPKillLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_PvPKillLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BattlegroundEndingCB_WinsOnlyCB" x="-20" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_PvPKillCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_PvPKillCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_PvPKillLogCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_QuestTurnInLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_QuestTurnInLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_PvPKillCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_BosskillsLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_BosskillsLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_QuestTurnInLogCB" x="0" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_BosskillsCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_BosskillsCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsLogCB" x="0" y="-5"/>
         </Anchors>
         <Frames>
-          <CheckButton name="$parent_FirstkillsCB" inherits="MemoriaCBTemplate">
+          <CheckButton name="$parent_FirstkillsCB" inherits="TaleCBTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="20" y="-5"/>
             </Anchors>
           </CheckButton>
         </Frames>
       </CheckButton>
-      <CheckButton name="$parent_KillsLogCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_KillsLogCB" inherits="TaleCBTemplate">
 	<Anchors>
 	  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB_FirstkillsCB" x="-20" y="-5"/>
 	</Anchors>
       </CheckButton>
-      <CheckButton name="$parent_ChallengeDoneCB" inherits="MemoriaCBTemplate">
+      <CheckButton name="$parent_ChallengeDoneCB" inherits="TaleCBTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_KillsLogCB" x="0" y="-5"/>
         </Anchors>
