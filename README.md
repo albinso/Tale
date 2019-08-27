@@ -7,7 +7,7 @@ Each log entry consists of a list of elements contained by double quotation mark
 There are six mandatory fields that are included in all log entries. If the addon is unable to fill some of these fields it will insert the value -1. The fields are as follows:
 
 ### X coordinate
-A value ranging from 0 to 1. This represents how far along the X axis the player is on the current map (see MapID). 0 is far west with 1 being far east. 
+A value ranging from 0 to 1. This represents how far along the X axis the player is on the current map (see MapID). 0 is far west with 1 being far east. Due to limitations on the position API it's not possible to fetch positions in instances so thhis will be set to the error value in those cases.
 
 ### Y coordinate
 Exactly the same as X coordinate but instead working from north to south.
