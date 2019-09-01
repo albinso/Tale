@@ -86,6 +86,7 @@ Tale.EntryIDs = {
     std = 101,
     fly = 102,
     ghost = 103,
+    login = 191,
     death = 201,
     lvl = 301,
     boss = 411,
@@ -181,6 +182,7 @@ function Tale:ADDON_LOADED_Handler(frame)
     Tale:Initialize(frame)
     Tale:RegisterEvents(frame)
     TaleFrame:SetScript("OnUpdate", Tale.OnUpdate)
+    Tale:SaveCurrentState(Tale.EntryIDs.login)
 end
 
 function Tale:CHAT_MSG_SYSTEM_Handler(...)
