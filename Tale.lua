@@ -173,7 +173,6 @@ function Tale:GROUP_Handler(category, partyID)
             names = format("%s, %s", names, v)
         end
     end
-    print(names)
     Tale:SaveCurrentState(format("%d, %s", Tale.EntryIDs.groupchange, names))
     
 end
