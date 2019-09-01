@@ -388,9 +388,9 @@ end
 function Tale:Initialize(frame)
     if (not Tale_Options) then
         Tale_Options = {}
-        for key, val in pairs(Tale.DefaultOptions) do
-            Tale_Options[key] = val
-        end
+    end
+    for key, val in pairs(Tale.DefaultOptions) do
+        if not Tale_Options[key] then Tale_Options[key] = val; end
     end
     if (not Tale_LogData) then
 	Tale_LogData = {}
