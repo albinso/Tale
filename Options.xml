@@ -162,6 +162,11 @@
 <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_BosskillsCB_FirstkillsCB" x="-20" y="-15"/>
 </Anchors>
 </CheckButton>
+<CheckButton name="$parent_GroupLogCB" inherits="TaleCBTemplate">
+<Anchors>
+<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_KillsLogCB" x="0" y="-15"/>
+</Anchors>
+</CheckButton>
 </Frames>
 </Frame>
 <ScrollFrame name="TaleScrollTemplate" inherits="FauxScrollFrameTemplate" virtual="true">

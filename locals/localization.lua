@@ -23,6 +23,7 @@ Tale.L = {
     ["death log"] = "Log own deaths",
     ["death"] = "Screenshot own deaths",
     ["exalted only"] = "exalted only",
+    ["group log"] = "Log group members",
     ["hours"] = "hours",
     ["kills log"] = "Log all kills",
     ["level up log"] = "Log level ups",
