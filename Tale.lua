@@ -150,7 +150,6 @@ function Tale:EventHandler(frame, event, ...)
 	Tale:QUEST_TURNED_IN_Handler(...)
 
     elseif (event == "GROUP_ROSTER_UPDATE") then
-        print("Group event "..event)
         Tale:GROUP_Handler(...)
 
     end
