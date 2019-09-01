@@ -77,6 +77,7 @@ function Tale:OptionsSave()
     Tale_Options.logInterval = math.floor(TaleOptions_Options_LogIntervalSlider:GetValue())
     Tale_Options.questTurnInLog = TaleOptions_Options_QuestTurnInLogCB:GetChecked()
     Tale_Options.killsLog = TaleOptions_Options_KillsLogCB:GetChecked()
+    Tale_Options.groupLog = TaleOptions_Options_GroupLogCB:GetChecked()
 
     Tale:RegisterEvents(TaleFrame)
 end
@@ -125,6 +126,9 @@ function Tale:OptionsRestore()
 
     TaleOptions_Options_KillsLogCB:SetChecked(Tale_Options.killsLog)
     Tale:OptionsEnableDisable(TaleOptions_Options_KillsLogCB)
+
+    TaleOptions_Options_GroupLogCB:SetChecked(Tale_Options.groupLog)
+    Tale:OptionsEnableDisable(TaleOptions_Options_GroupLogCB)
 end
 
 function Tale:OptionsInitialize()
@@ -160,6 +164,8 @@ function Tale:OptionsInitialize()
     TaleOptions_Options_QuestTurnInLogCB_Text:SetText(Tale.L["quest turn in log"])
 
     TaleOptions_Options_KillsLogCB_Text:SetText(Tale.L["kills log"])
+
+    TaleOptions_Options_GroupLogCB_Text:SetText(Tale.L["group log"])
 
     TaleOptions_Options_LogIntervalSlider:SetScript("OnUpdate", function (self, elapsed) TaleOptions_Options_LogIntervalSlider_Text:SetText(format(Tale.L["log interval"], math.floor(TaleOptions_Options_LogIntervalSlider:GetValue()))) end)
     -- parse current options

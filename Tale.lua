@@ -79,6 +79,7 @@ Tale.DefaultOptions = {
     bosskillsLog = true,
     questTurnInLog = true,
     killsLog = true,
+    groupLog = true,
 }
 
 Tale.EntryIDs = {
@@ -92,6 +93,8 @@ Tale.EntryIDs = {
     bgend = 511,
     quest = 311,
     kill = 401,
+    groupchange = 601,
+    groupleft = 603,
 }
 
 ----------------------------
@@ -145,8 +148,33 @@ function Tale:EventHandler(frame, event, ...)
     elseif (event == "QUEST_TURNED_IN") then
 	Tale:QUEST_TURNED_IN_Handler(...)
 
+    elseif (event == "GROUP_ROSTER_UPDATE") then
+        print("Group event "..event)
+        Tale:GROUP_Handler(...)
+
     end
 
+end
+
+function Tale:GROUP_Handler(category, partyID)
+    if (not Tale_Options.groupLog) then return; end
+    local members = GetHomePartyInfo()
+    if GetNumGroupMembers() == Tale.partyMembers then return; end
+    Tale.partyMembers = GetNumGroupMembers()
+    if members == nil then
+        Tale:SaveCurrentState(Tale.EntryIDs.groupleft)
+    end
+    local names = nil
+    for k,v in pairs(members) do
+        if names == nil then 
+            names = v 
+        else 
+            names = format("%s, %s", names, v)
+        end
+    end
+    print(names)
+    Tale:SaveCurrentState(format("%d, %s", Tale.EntryIDs.groupchange, names))
+    
 end
 
 function Tale:ADDON_LOADED_Handler(frame)
@@ -343,6 +371,16 @@ function Tale:OnUpdate(elapsed)
 end
 
 
+function Tale:TableLength(tab)
+    local count = 0
+    for _ in pairs(tab) do count = count + 1 end
+    return count
+end
+
+function Tale:SaveVersion(version, position)
+    table.insert(Tale_VersionData, format(version..", %d", position))
+end
+
 ----------------------------------------------
 --  Update saved data and initialize addon  --
 ----------------------------------------------
@@ -356,6 +394,13 @@ function Tale:Initialize(frame)
     if (not Tale_LogData) then
 	Tale_LogData = {}
     end
+    if (not Tale_VersionData) then
+	Tale_VersionData = {}
+	local len = Tale:TableLength(Tale_LogData)
+	if (len > 0) then
+	    Tale:SaveVersion("1.0", 1)
+	end
+    end
     if (not Tale_CharBossKillDB) then
         Tale_CharBossKillDB = {}
     end
@@ -366,9 +411,15 @@ function Tale:Initialize(frame)
     if not Tale_CharLevelTimes[Tale.PlayerLevel] then
         Tale_CharLevelTimes[Tale.PlayerLevel] = 0
     end
+    local versionlen = Tale:TableLength(Tale_VersionData)
+    if (versionlen == 0 or not string.match(Tale_VersionData[versionlen], Tale.ADDONVERSION)) then
+        local loglen = Tale:TableLength(Tale_LogData)
+        Tale:SaveVersion(Tale.ADDONVERSION, loglen+1)
+    end
     Tale.queue = {}
     Tale.mobHitCache = {}
     Tale.state = STATE_IDLE
+    Tale.groupMembers = 0
     Tale:OptionsInitialize()
 end
 
@@ -393,7 +444,8 @@ function Tale:RegisterEvents(frame)
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
     if (Tale_Options.pvpKills or Tale_Options.pvpKillsLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
     if (Tale_Options.questTurnInLog) then frame:RegisterEvent("QUEST_TURNED_IN"); end
-
+    frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+    frame:RegisterEvent("GROUP_LEFT")
 end
 
 

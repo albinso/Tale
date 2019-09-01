@@ -1,12 +1,12 @@
 ## Interface: 80200
 ## Title: Tale
-## Version: 1.0
+## Version: 1.0.1
 ## Notes: Tale automatically screenshots and logs various milestones of your characters.
 ## Author: Albin Johansson
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: Tale_Options
-## SavedVariablesPerCharacter: Tale_CharBossKillDB, Tale_CharLevelTimes, Tale_LogData
+## SavedVariablesPerCharacter: Tale_CharBossKillDB, Tale_CharLevelTimes, Tale_LogData, Tale_VersionData
 ## X-Website: http://albinso.com
 
 embeds.xml
