@@ -447,7 +447,6 @@ function Tale:RegisterEvents(frame)
     if (Tale_Options.pvpKills or Tale_Options.pvpKillsLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
     if (Tale_Options.questTurnInLog) then frame:RegisterEvent("QUEST_TURNED_IN"); end
     frame:RegisterEvent("GROUP_ROSTER_UPDATE")
-    frame:RegisterEvent("GROUP_LEFT")
 end
 
 
