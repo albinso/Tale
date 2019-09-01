@@ -35,6 +35,9 @@ Inserted at beginning of flight master travel and used for periodic entries whil
 #### Ghost (ID: 103)
 Inserted when character becomes ghost (upon pressing Release Spirit) and used for periodic entries while ghost. No additional fields.
 
+#### Login (ID: 191)
+Inserted before anything else when logging in. Serves as a marker so we don't have to guess by looking at timestamps.
+
 #### Death (ID: 201)
 Inserted immediately upon character death.  
 Additional field: the name of the source of the killing damage. This can be one of the environmental categories, a mob name or a player name.
@@ -62,6 +65,13 @@ Additional field: name of the killed enemy player.
 #### Battleground end (ID 511)
 Inserted at end of battlegrounds.  
 Additional field: string equal to "won" or "lost" depending on outcome.
+
+#### Group change (ID 601)
+Inserted when group size changes. Basically any time a group member is added or removed.
+Additional fields: 1-4 names of group members.
+
+#### Group left (ID 603)
+Inserted when leaving party, even if this is by the party dissolving.
 
 
 
