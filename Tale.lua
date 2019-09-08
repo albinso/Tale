@@ -113,9 +113,6 @@ function Tale:EventHandler(frame, event, ...)
     elseif (event == "CHAT_MSG_SYSTEM") then
         Tale:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
         Tale:CHAT_MSG_SYSTEM_Handler(...)
-        
-    elseif (event == "ENCOUNTER_END") then
-        Tale:ENCOUNTER_END_Handler(...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
         Tale:PLAYER_LEVEL_UP_Handler(...)
@@ -207,20 +204,18 @@ function Tale:PLAYER_CONTROL_GAINED_Handler(...)
     Tale:StandardStateSave()
 end
 
-function Tale:ENCOUNTER_END_Handler(...)
-    local encounterID, name, difficulty, size, success = ...
-    Tale:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
-    if ((not encounterID) or (not difficulty)) then return; end
-    if (success == 1) then 
-    	if (Tale_Options.bosskillsLog) then Tale:SaveCurrentState(format("%s, %d", Tale.EntryIDs.boss, encounterID)); end
-	if (not Tale_Options.bosskills) then return; end
-        -- check if boss was a known kill, if "only after first kill" is enabled
-        if (not Tale_CharBossKillDB[difficulty]) then Tale_CharBossKillDB[difficulty] = {}; end
-        if (Tale_Options.bosskillsFirstkill and Tale_CharBossKillDB[difficulty][encounterID]) then return; end
-        Tale:AddScheduledScreenshot(1)
-        Tale:DebugMsg("Encounter successful - Added screenshot to queue")
-        Tale_CharBossKillDB[difficulty][encounterID] = true
+function Tale:BossKill_Handler(id, name)
+    if (Tale_Options.bosskillsLog) then 
+            local s = format("%d, %s, %s", Tale.EntryIDs.boss, name, id)
+            Tale:SaveCurrentState(s)
     end
+    if (not Tale_Options.bosskills) then return; end
+    -- check if boss was a known kill, if "only after first kill" is enabled
+    if (not Tale_CharBossKillDB) then Tale_CharBossKillDB = {}; end
+    if (Tale_Options.bosskillsFirstkill and Tale_CharBossKillDB[id]) then return; end
+    Tale:AddScheduledScreenshot(1)
+    Tale:DebugMsg("Encounter successful - Added screenshot to queue")
+    Tale_CharBossKillDB[id] = true
 end
 
 function Tale:PLAYER_DEAD_Handler(...)
@@ -230,11 +225,13 @@ function Tale:PLAYER_DEAD_Handler(...)
 end
 
 function Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName)
-    if (sourceName == UnitName("player") and subevent:match('_DAMAGE$')) then
-	if (Tale.mobHitCache[destGUID] == nil) then Tale.mobHitCache[destGUID] = 1; end
-    end
-    if (subevent == "UNIT_DIED" and Tale.mobHitCache[destGUID] and Tale.mobHitCache[destGUID] == 1) then
-	Tale:SaveCurrentState(format("%d, %s", Tale.EntryIDs.kill, destName))
+    if (subevent == "PARTY_KILL") then
+        local tokens = Tale:Tokenize_GUID(destGUID)
+        if Tale.bosses[tonumber(tokens[6])] ~= nil then
+            Tale:BossKill_Handler(tokens[6], destName)
+        else
+	    Tale:SaveCurrentState(format("%d, %s, %d", Tale.EntryIDs.kill, destName, tokens[6]))
+        end
     end
 end
 
@@ -246,6 +243,14 @@ function Tale:PLAYER_TAKES_DAMAGE_Check(subevent, sourceName, prefixParam1)
     elseif subevent == "ENVIRONMENTAL_DAMAGE" then
 	Tale.LastAttack = prefixParam1
     end
+end
+
+function Tale:Tokenize_GUID(GUID)
+    local tokens = {}
+    for v in string.gmatch(GUID, "[^-]+") do
+        table.insert(tokens, v)
+    end
+    return tokens
 end
 
 function Tale:COMBAT_LOG_Handler(...)

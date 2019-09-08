@@ -14,3 +14,4 @@ locals.xml
 Options.xml
 Options.lua
 Tale.lua
+Bosses.lua
