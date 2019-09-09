@@ -157,6 +157,7 @@ function Tale:GROUP_Handler(category, partyID)
     Tale.partyMembers = GetNumGroupMembers()
     if members == nil then
         Tale:SaveCurrentState(Tale.EntryIDs.groupleft)
+        return
     end
     local names = nil
     for k,v in pairs(members) do
@@ -224,13 +225,13 @@ end
 function Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName)
     if (subevent == "PARTY_KILL") then
         local tokens = Tale:Tokenize_GUID(destGUID)
+        print(tokens)
         if tokens[1] == "Player" then
             Tale:PLAYER_PVP_KILLS_CHANGED_Handler(destName)
-        end
-        if Tale.bosses[tonumber(tokens[6])] ~= nil then
+        elseif Tale.bosses[tonumber(tokens[6])] ~= nil then
             Tale:BossKill_Handler(tokens[6], destName)
-        else
-	    Tale:SaveCurrentState(format("%d, %s, %d", Tale.EntryIDs.kill, destName, tokens[6]))
+        elseif (Tale_Options.killsLog) then 
+            Tale:SaveCurrentState(format("%d, %s, %d", Tale.EntryIDs.kill, destName, tokens[6]))
         end
     end
 end
@@ -256,7 +257,7 @@ end
 function Tale:COMBAT_LOG_Handler(...)
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
     if not (destName == UnitName("player")) then 
-	if (Tale_Options.killsLog) then Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName); end
+        Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName); end
     else
 	if (Tale_Options.deathLog) then Tale:PLAYER_TAKES_DAMAGE_Check(subevent, sourceName, prefixParam1); end
     end
