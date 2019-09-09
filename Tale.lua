@@ -140,9 +140,6 @@ function Tale:EventHandler(frame, event, ...)
     elseif (event == "PLAYER_CONTROL_GAINED") then
 	Tale:PLAYER_CONTROL_GAINED_Handler(...)
 
-    elseif (event == "PLAYER_PVP_KILLS_CHANGED") then
-	Tale:PLAYER_PVP_KILLS_CHANGED_Handler(...)
-
     elseif (event == "QUEST_TURNED_IN") then
 	Tale:QUEST_TURNED_IN_Handler(...)
 
@@ -227,6 +224,9 @@ end
 function Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName)
     if (subevent == "PARTY_KILL") then
         local tokens = Tale:Tokenize_GUID(destGUID)
+        if tokens[1] == "Player" then
+            Tale:PLAYER_PVP_KILLS_CHANGED_Handler(destName)
+        end
         if Tale.bosses[tonumber(tokens[6])] ~= nil then
             Tale:BossKill_Handler(tokens[6], destName)
         else
@@ -435,7 +435,6 @@ end
 function Tale:RegisterEvents(frame)
     frame:UnregisterAllEvents()
     if (Tale_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
-    if (Tale_Options.bosskills or Tale_Options.bosskillsLog) then frame:RegisterEvent("ENCOUNTER_END"); end
     if (Tale_Options.levelUp or Tale_Options.levelUpLog) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Tale_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
     if (Tale_Options.battlegroundEnding or Tale_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
@@ -447,7 +446,6 @@ function Tale:RegisterEvents(frame)
     if (Tale_Options.death or Tale_Options.deathLog) then frame:RegisterEvent("PLAYER_DEAD"); end
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
-    if (Tale_Options.pvpKills or Tale_Options.pvpKillsLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
     if (Tale_Options.questTurnInLog) then frame:RegisterEvent("QUEST_TURNED_IN"); end
     frame:RegisterEvent("GROUP_ROSTER_UPDATE")
 end
