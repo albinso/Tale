@@ -163,6 +163,7 @@ function Tale:GROUP_Handler(category, partyID)
     Tale.partyMembers = GetNumGroupMembers()
     if members == nil then
         Tale:SaveCurrentState(Tale.EntryIDs.groupleft)
+        return
     end
     local names = nil
     for k,v in pairs(members) do
