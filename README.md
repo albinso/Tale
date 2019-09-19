@@ -50,16 +50,15 @@ Inserted when a quest is turned in.
 Additional field: numeric Quest ID. 
 
 #### Kill (ID 401)
-Inserted whenever a unit the player has damaged dies.  
-Additional field: name of the killed unit.
+Inserted whenever a non-player unit is killed by the player or a party member.  
+Additional field: name of the killed unit, unit id of the killed unit.
 
 #### Boss (ID 411)
-Inserted on the end of a successful instanced encounter. This should only be dungeon and raid bosses but there may be exceptions I'm not aware of. Overlaps with 401.  
-Additional field: numeric id for the encounter.
-
+Inserted when a boss is killed by the player or a party member.  
+Additional fields: boss name, unit id of the boss.
 
 #### PvP Kill (ID 501) 
-Inserted on honorable PvP kills. May overlap with 401.  
+Inserted on player kills. 
 Additional field: name of the killed enemy player.
 
 #### Battleground end (ID 511)
