@@ -1,6 +1,6 @@
 ## Interface: 80200
 ## Title: Tale
-## Version: 1.1
+## Version: 1.2
 ## Notes: Tale automatically screenshots and logs various milestones of your characters.
 ## Author: Albin Johansson
 ## LoadOnDemand: 0
@@ -14,3 +14,4 @@ locals.xml
 Options.xml
 Options.lua
 Tale.lua
+Bosses.lua

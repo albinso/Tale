@@ -113,9 +113,6 @@ function Tale:EventHandler(frame, event, ...)
     elseif (event == "CHAT_MSG_SYSTEM") then
         Tale:DebugMsg("CHAT_MSG_SYSTEM_Handler() called...")
         Tale:CHAT_MSG_SYSTEM_Handler(...)
-        
-    elseif (event == "ENCOUNTER_END") then
-        Tale:ENCOUNTER_END_Handler(...)
     
     elseif (event == "PLAYER_LEVEL_UP") then
         Tale:PLAYER_LEVEL_UP_Handler(...)
@@ -142,9 +139,6 @@ function Tale:EventHandler(frame, event, ...)
 
     elseif (event == "PLAYER_CONTROL_GAINED") then
 	Tale:PLAYER_CONTROL_GAINED_Handler(...)
-
-    elseif (event == "PLAYER_PVP_KILLS_CHANGED") then
-	Tale:PLAYER_PVP_KILLS_CHANGED_Handler(...)
 
     elseif (event == "QUEST_TURNED_IN") then
 	Tale:QUEST_TURNED_IN_Handler(...)
@@ -208,20 +202,18 @@ function Tale:PLAYER_CONTROL_GAINED_Handler(...)
     Tale:StandardStateSave()
 end
 
-function Tale:ENCOUNTER_END_Handler(...)
-    local encounterID, name, difficulty, size, success = ...
-    Tale:DebugMsg("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
-    if ((not encounterID) or (not difficulty)) then return; end
-    if (success == 1) then 
-    	if (Tale_Options.bosskillsLog) then Tale:SaveCurrentState(format("%s, %d", Tale.EntryIDs.boss, encounterID)); end
-	if (not Tale_Options.bosskills) then return; end
-        -- check if boss was a known kill, if "only after first kill" is enabled
-        if (not Tale_CharBossKillDB[difficulty]) then Tale_CharBossKillDB[difficulty] = {}; end
-        if (Tale_Options.bosskillsFirstkill and Tale_CharBossKillDB[difficulty][encounterID]) then return; end
-        Tale:AddScheduledScreenshot(1)
-        Tale:DebugMsg("Encounter successful - Added screenshot to queue")
-        Tale_CharBossKillDB[difficulty][encounterID] = true
+function Tale:BossKill_Handler(id, name)
+    if (Tale_Options.bosskillsLog) then 
+            local s = format("%d, %s, %s", Tale.EntryIDs.boss, name, id)
+            Tale:SaveCurrentState(s)
     end
+    if (not Tale_Options.bosskills) then return; end
+    -- check if boss was a known kill, if "only after first kill" is enabled
+    if (not Tale_CharBossKillDB) then Tale_CharBossKillDB = {}; end
+    if (Tale_Options.bosskillsFirstkill and Tale_CharBossKillDB[id]) then return; end
+    Tale:AddScheduledScreenshot(1)
+    Tale:DebugMsg("Encounter successful - Added screenshot to queue")
+    Tale_CharBossKillDB[id] = true
 end
 
 function Tale:PLAYER_DEAD_Handler(...)
@@ -231,11 +223,15 @@ function Tale:PLAYER_DEAD_Handler(...)
 end
 
 function Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName)
-    if (sourceName == UnitName("player") and subevent:match('_DAMAGE$')) then
-	if (Tale.mobHitCache[destGUID] == nil) then Tale.mobHitCache[destGUID] = 1; end
-    end
-    if (subevent == "UNIT_DIED" and Tale.mobHitCache[destGUID] and Tale.mobHitCache[destGUID] == 1) then
-	Tale:SaveCurrentState(format("%d, %s", Tale.EntryIDs.kill, destName))
+    if (subevent == "PARTY_KILL") then
+        local tokens = Tale:Tokenize_GUID(destGUID)
+        if tokens[1] == "Player" then
+            Tale:PLAYER_PVP_KILLS_CHANGED_Handler(destName)
+        elseif Tale.bosses[tonumber(tokens[6])] ~= nil then
+            Tale:BossKill_Handler(tokens[6], destName)
+        elseif (Tale_Options.killsLog) then 
+            Tale:SaveCurrentState(format("%d, %s, %d", Tale.EntryIDs.kill, destName, tokens[6]))
+        end
     end
 end
 
@@ -249,10 +245,18 @@ function Tale:PLAYER_TAKES_DAMAGE_Check(subevent, sourceName, prefixParam1)
     end
 end
 
+function Tale:Tokenize_GUID(GUID)
+    local tokens = {}
+    for v in string.gmatch(GUID, "[^-]+") do
+        table.insert(tokens, v)
+    end
+    return tokens
+end
+
 function Tale:COMBAT_LOG_Handler(...)
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, prefixParam1, prefixParam2, _, suffixParam1, suffixParam2  = CombatLogGetCurrentEventInfo()
     if not (destName == UnitName("player")) then 
-	if (Tale_Options.killsLog) then Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName); end
+        Tale:PLAYER_KILLS_UNIT_Check(subevent, sourceName, destGUID, destName)
     else
 	if (Tale_Options.deathLog) then Tale:PLAYER_TAKES_DAMAGE_Check(subevent, sourceName, prefixParam1); end
     end
@@ -431,7 +435,6 @@ end
 function Tale:RegisterEvents(frame)
     frame:UnregisterAllEvents()
     if (Tale_Options.reputationChange) then frame:RegisterEvent("CHAT_MSG_SYSTEM"); end
-    if (Tale_Options.bosskills or Tale_Options.bosskillsLog) then frame:RegisterEvent("ENCOUNTER_END"); end
     if (Tale_Options.levelUp or Tale_Options.levelUpLog) then frame:RegisterEvent("PLAYER_LEVEL_UP"); end
     if (Tale_Options.levelUpShowPlayed) then frame:RegisterEvent("TIME_PLAYED_MSG"); end
     if (Tale_Options.battlegroundEnding or Tale_Options.battlegroundEndingLog) then frame:RegisterEvent("UPDATE_BATTLEFIELD_STATUS"); end
@@ -443,7 +446,6 @@ function Tale:RegisterEvents(frame)
     if (Tale_Options.death or Tale_Options.deathLog) then frame:RegisterEvent("PLAYER_DEAD"); end
     frame:RegisterEvent("PLAYER_CONTROL_LOST")
     frame:RegisterEvent("PLAYER_CONTROL_GAINED")
-    if (Tale_Options.pvpKills or Tale_Options.pvpKillsLog) then frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED"); end
     if (Tale_Options.questTurnInLog) then frame:RegisterEvent("QUEST_TURNED_IN"); end
     frame:RegisterEvent("GROUP_ROSTER_UPDATE")
 end
