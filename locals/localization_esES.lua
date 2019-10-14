@@ -1,5 +1,5 @@
 -- ********************************************************
--- **               Memoria - esES Local                 **
+-- **               Tale - esES Local                 **
 -- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
@@ -8,8 +8,44 @@
 --
 
 -- Check for addon table
-if (not Memoria) then Memoria = {}; end
+if (not Tale) then Tale = {}; end
 if GetLocale() ~= "esES" then return end
 
 -- Localization
---@localization(locale="esES", format="lua_additive_table", handle-unlocalized="comment", table-name="Memoria.L")@
+--[[Translation missing --]]
+--[[ Tale.L["arena endings"] = "arena endings"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["battleground endings"] = "battleground endings"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["bosskills"] = "boss kills"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["challenge instance endings"] = "mythic+ instance endings"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["days"] = "days"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["exalted only"] = "exalted only"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["hours"] = "hours"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["level up"] = "level up"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["minutes"] = "minutes"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["new achievement"] = "new achievement"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["new reputation level"] = "new reputation level"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["only after first kill"] = "only once per difficulty"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["resize chat window"] = "Resize chat window for played message"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["seconds"] = "seconds"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["show played"] = "show /played in chat"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["Take screenshot on"] = "Take screenshot on"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["time played"] = "Time played at level"--]] 
+--[[Translation missing --]]
+--[[ Tale.L["wins only"] = "wins only"--]] 
+

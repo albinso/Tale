@@ -1,0 +1,29 @@
+tag 87f590ba0142bfef4c633220c0544138e7cbfdca v8.2
+Author:	Mizukichan <mizukichan@arcor.de>
+Date:	Sun Jun 30 17:49:44 2019 +0200
+
+Tagging as v8.2
+
+commit be30934f05202746b2ed0a18e5839b65276251ee
+Author: Mizukichan <mizukichan@arcor.de>
+Date:   Sun Jun 30 17:48:06 2019 +0200
+
+    Added option to enable/disable chat window resize (disabled by default)
+
+commit 7865b9eb01f125b6b556e5bcd8d69c2189c55213
+Author: Mizukichan <mizukichan@arcor.de>
+Date:   Sun Jun 30 16:37:59 2019 +0200
+
+    Merged contributions by Softea_Lethon:
+    * Added support for Classic WoW
+    * Added feature to show time played
+    * Expands chat window to show time played
+    * Tracks time played per level
+    * Converted screenshot manager to FSM onupdate
+
+commit b3aa83cc5dc4702eccf5898ca4131150057dba52
+Author: Mizukichan <mizukichan@arcor.de>
+Date:   Sun Jun 30 16:34:24 2019 +0200
+
+    Added zhCN translation (thanks to Micehan)
+

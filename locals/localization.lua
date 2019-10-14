@@ -1,5 +1,5 @@
 -- ********************************************************
--- **              Memoria - enGB/enUS Local             **
+-- **              Tale - enGB/enUS Local             **
 -- **             <http://www.cosmocanyon.de>            **
 -- ********************************************************
 --
@@ -8,24 +8,32 @@
 --
 
 -- Check for addon table
-if (not Memoria) then Memoria = {}; end
-local Memoria = Memoria;
+if (not Tale) then Tale = {}; end
+local Tale = Tale;
 
 -- Localization
-Memoria.L = {
-    ["Take screenshot on"] = "Take screenshot on",
-    ["arena endings"] = "arena endings",
-    ["battleground endings"] = "battleground endings",
-    ["bosskills"] = "boss kills",
-    ["challenge instance endings"] = "mythic+ instance endings",
+Tale.L = {
+    ["Take screenshot on"] = "Configure Log and Screenshot settings",
+    ["log interval"] = "Log current status every %d seconds",
+    ["battleground endings log"] = "Log battleground endings",
+    ["battleground endings"] = "Screenshot battleground endings",
+    ["bosskills log"] = "Log boss kills",
+    ["bosskills"] = "Screenshot boss kills",
     ["days"] = "days",
+    ["death log"] = "Log own deaths",
+    ["death"] = "Screenshot own deaths",
     ["exalted only"] = "exalted only",
+    ["group log"] = "Log group members",
     ["hours"] = "hours",
-    ["level up"] = "level up",
+    ["kills log"] = "Log all kills",
+    ["level up log"] = "Log level ups",
+    ["level up"] = "Screenshot level ups",
     ["minutes"] = "minutes",
-    ["new achievement"] = "new achievement",
-    ["new reputation level"] = "new reputation level",
-    ["only after first kill"] = "only once per difficulty",
+    ["new reputation level"] = "Screenshot new reputation levels",
+    ["only after first kill"] = "only once per boss",
+    ["pvp kills"] = "Screenshot PvP kills",
+    ["pvp kills log"] = "Log PvP kills",
+    ["quest turn in log"] = "Log quest turn ins",
     ["seconds"] = "seconds",
     ["show played"] = "show /played in chat",
     ["resize chat window"] = "Resize chat window for played message",
