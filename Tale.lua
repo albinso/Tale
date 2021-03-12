@@ -290,6 +290,7 @@ function Tale:PLAYER_LEVEL_UP_SHOW_PLAYED_Handler(...)
     if (not Tale_Options.levelUp) then return; end
     if (not Tale_Options.levelUpShowPlayed) then return; end
     if (not Tale.WaitForTimePlayed) then return; end
+    ChatFrame1Tab:Click();
     Tale.WaitForTimePlayed = false
     Tale:ShowPrevious()
     Tale:AddScheduledScreenshot(0)
